@@ -40,10 +40,6 @@ class AppServiceProvider extends ServiceProvider
             return $user->role_id === Role::where("name", "community_manager")->first()?->id;
         });
 
-        Gate::define('is-admin', function($user) {
-            return $user->role_id === Role::where("name", "admin")->first()?->id;
-        });
-
         Gate::define('is-user', function($user) {
             return $user->role_id === Role::where("name", "user")->first()?->id;
         });
