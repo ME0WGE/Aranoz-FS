@@ -33,6 +33,13 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'can' => [
+                    'isAdmin' => $request->user()?->can('is-admin') ?? false,
+                    'isWebmaster' => $request->user()?->can('is-webmaster') ?? false,
+                    'isAgent' => $request->user()?->can('is-agent') ?? false,
+                    'isCommunityManager' => $request->user()?->can('is-community-manager') ?? false,
+                    'isUser' => $request->user()?->can('is-user') ?? false,
+                ]
             ],
         ];
     }
