@@ -52,4 +52,10 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(Role::class);
     }
+
+    public function avatar()
+    {
+        // Si avatar est une clé étrangère vers avatars.id
+        return $this->belongsTo(Avatar::class, 'avatar');
+    }
 }
