@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
@@ -14,28 +15,13 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        $user = $request->user();
+
+        if (!$user || !$user->role || !in_array($user->role->name, $roles)) {
+            abort(403, "Pas les permissions chef");
         }
-
-        $user = Auth::user();
-
-        switch ($role) {
-            case 'admin':
-                if(!$user->isAdmin()) {
-                    return redirect()->back()->with('error', 'Vous n\'avez pas les permissions' );
-                }
-                break;
-
-            case 'admin':
-                if(!$user->isAdmin()) {
-                    return redirect()->back()->with('error', 'Vous n\'avez pas les permissions' );
-                }
-                break;
-        }
-
 
         return $next($request);
     }
