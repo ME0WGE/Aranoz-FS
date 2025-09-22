@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Mail\DemoMail;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,7 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/mail-test', function () {
-    Mail::to('baldygakamil@gmail.com')->send(new DemoMail());
+    Mail::to(Auth::user()->email)->send(new DemoMail());
     return 'Mail envoyé.';
 });
 
