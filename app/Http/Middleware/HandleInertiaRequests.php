@@ -32,7 +32,7 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()?->load(["avatar", "role"]),
                 'can' => [
                     'isAdmin' => $request->user()?->can('is-admin') ?? false,
                     'isWebmaster' => $request->user()?->can('is-webmaster') ?? false,
