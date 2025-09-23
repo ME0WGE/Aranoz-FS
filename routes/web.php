@@ -13,6 +13,7 @@ use Inertia\Inertia;
 // Public route
 Route::get('/', [HomeController::class, "index"])->name('home');
 Route::get('/products', [ProductController::class, "index"])->name('products');
+Route::get('/products/{id}', [ProductController::class, "show"])->name('products.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -14,4 +14,11 @@ class ProductController extends Controller
             'products' => $products,
         ]);
     }
+
+    public function show($id) {
+        $product = Product::find($id);
+        return Inertia::render('Shop/Show', [
+            'product' => $product,
+        ]);
+    }
 }
