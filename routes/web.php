@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Public route
 Route::get('/', [HomeController::class, "index"])->name('home');
 
 Route::get('/dashboard', function () {
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Mailing route
 Route::get('/mail-test', function () {
     Mail::to(Auth::user()->email)->send(new DemoMail());
     return 'Mail envoyé.';
