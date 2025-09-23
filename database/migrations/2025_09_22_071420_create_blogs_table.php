@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->string('image'); // file or url
             $table->string('title');
-            $table->text('description');
-            $table->string('image');
-            $table->foreignId('blog_category_id')->constrained('blog_categories');
+            $table->text('content');
+            $table->foreignId('blog_category_id')->constrained('blog_categories'); // Blog category: only 1
+            $table->foreignId('tag_id')->nullable()->constrained('tags'); // Blog tags: null or have 1 or more tags
             $table->timestamps();
         });
     }

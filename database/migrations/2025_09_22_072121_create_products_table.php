@@ -16,15 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('price');
-            $table->integer('quantity');
+            $table->integer('stock_quantity');
             $table->boolean('pinned');
-            $table->string('image_1');
-            $table->string('image_2');
-            $table->string('image_3');
-            $table->string('image_4');
-            $table->foreignId('product_category_id')->constrained('product_categories');
-            $table->foreignId('discount_id')->constrained('discounts');
-            $table->foreignId('color_id')->constrained('colors');
+            $table->string('picture_main'); // file or url
+            $table->string('picture_rear'); // file or url
+            $table->string('picture_left'); // file or url
+            $table->string('picture_right'); // file or url
+            $table->foreignId('product_category_id')->constrained('product_categories'); // Product category: only 1
+            $table->foreignId('discount_id')->constrained('discounts'); // Discount on the price of the product: (price - discount)
+            $table->foreignId('color_id')->constrained('colors'); // Product color: only 1
             $table->timestamps();
         });
     }
