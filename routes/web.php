@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Mail\DemoMail;
 use Illuminate\Foundation\Application;
@@ -11,6 +12,7 @@ use Inertia\Inertia;
 
 // Public route
 Route::get('/', [HomeController::class, "index"])->name('home');
+Route::get('/products', [ProductController::class, "index"])->name('products');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

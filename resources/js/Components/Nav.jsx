@@ -32,8 +32,8 @@ export default function Nav({ auth }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    <Dropdown.Link href="/products/categories">Categories</Dropdown.Link>
-                                    <Dropdown.Link href="/products/categories">Track your order</Dropdown.Link>
+                                    <Dropdown.Link href="/products">Categories</Dropdown.Link>
+                                    <Dropdown.Link href="/orders/track">Track your order</Dropdown.Link>
                                 </Dropdown.Content>
                             </Dropdown>
 
