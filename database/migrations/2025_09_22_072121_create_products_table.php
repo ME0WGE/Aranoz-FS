@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->integer('price');
+            $table->integer('price'); // Price in cents
             $table->integer('stock_quantity');
-            $table->boolean('pinned');
-            $table->string('picture_main'); // file or url
-            $table->string('picture_rear'); // file or url
-            $table->string('picture_left'); // file or url
-            $table->string('picture_right'); // file or url
-            $table->foreignId('product_category_id')->constrained('product_categories'); // Product category: only 1
-            $table->foreignId('discount_id')->constrained('discounts'); // Discount on the price of the product: (price - discount)
-            $table->foreignId('color_id')->constrained('colors'); // Product color: only 1
+            $table->boolean('pinned')->default(false); // For homepage carousel
+            $table->string('picture_main'); // Main product image
+            $table->string('picture_rear')->nullable(); // Rear view
+            $table->string('picture_left')->nullable(); // Left view  
+            $table->string('picture_right')->nullable(); // Right view
+            $table->foreignId('product_category_id')->constrained('product_categories');
+            $table->foreignId('discount_id')->nullable()->constrained('discounts'); // Can be null for no discount
+            $table->foreignId('color_id')->constrained('colors');
             $table->timestamps();
         });
     }

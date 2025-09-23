@@ -15,13 +15,19 @@ class OrderSeeder extends Seeder
     {
         Order::create([
             'user_id' => 1,
-            'total' => 470,
-            'status' => 'en attente',
+            'total_price' => 47000, // Price in cents
+            'order_number' => 'ARZ-2025-001',
+            'status' => 'pending',
+            'payment_method' => 'paypal',
+            'shipping_method' => 'free_worldwide',
         ]);
         Order::create([
             'user_id' => 1,
-            'total' => 120,
-            'status' => 'payé',
+            'total_price' => 12000, // Price in cents
+            'order_number' => 'ARZ-2025-002',
+            'status' => 'confirmed',
+            'payment_method' => 'check',
+            'shipping_method' => 'free_worldwide',
         ]);
     }
 }

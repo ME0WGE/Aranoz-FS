@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('message');
+            $table->text('message');
             $table->string('email');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('blog_id')->constrained('blogs');
-            $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
         });
     }

@@ -15,15 +15,15 @@ class DiscountSeeder extends Seeder
     {
         Discount::create([
             'name' => 'Aucune',
-            'percent' => 0,
+            'percentage' => 0,
         ]);
         Discount::create([
             'name' => 'Promo été',
-            'percent' => 10,
+            'percentage' => 10,
         ]);
         Discount::create([
             'name' => 'Black Friday',
-            'percent' => 20,
+            'percentage' => 20,
         ]);
     }
 }

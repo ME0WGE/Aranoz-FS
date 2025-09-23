@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avatars', function (Blueprint $table) {
+        Schema::create('newsletter_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('path'); // Avatar file path
+            $table->string('email')->unique(); // Newsletter email
+            $table->boolean('is_active')->default(true); // Subscription status
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avatars');
+        Schema::dropIfExists('newsletter_subscriptions');
     }
 };

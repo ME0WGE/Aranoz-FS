@@ -16,13 +16,13 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Chaise Scandinave',
             'description' => 'Chaise confortable et design pour le salon.',
-            'price' => 120,
-            'quantity' => 10,
+            'price' => 12000, // Price in cents
+            'stock_quantity' => 10,
             'pinned' => true,
-            'image_1' => 'chaise1.jpg',
-            'image_2' => 'chaise2.jpg',
-            'image_3' => 'chaise3.jpg',
-            'image_4' => 'chaise4.jpg',
+            'picture_main' => 'chaise1.jpg',
+            'picture_rear' => 'chaise2.jpg',
+            'picture_left' => 'chaise3.jpg',
+            'picture_right' => 'chaise4.jpg',
             'product_category_id' => 1,
             'discount_id' => 1,
             'color_id' => 1,
@@ -30,16 +30,16 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Table en bois',
             'description' => 'Table robuste en bois massif.',
-            'price' => 350,
-            'quantity' => 5,
+            'price' => 35000, // Price in cents
+            'stock_quantity' => 5,
             'pinned' => false,
-            'image_1' => 'table1.jpg',
-            'image_2' => 'table2.jpg',
-            'image_3' => 'table3.jpg',
-            'image_4' => 'table4.jpg',
-            'product_category_id' => 1,
-            'discount_id' => 1,
-            'color_id' => 1,
+            'picture_main' => 'table1.jpg',
+            'picture_rear' => 'table2.jpg',
+            'picture_left' => 'table3.jpg',
+            'picture_right' => 'table4.jpg',
+            'product_category_id' => 2,
+            'discount_id' => 2,
+            'color_id' => 2,
         ]);
     }
 }

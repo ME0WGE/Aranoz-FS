@@ -15,19 +15,19 @@ class BlogSeeder extends Seeder
     {
         Blog::create([
             'title' => 'Premier article',
-            'description' => 'Ceci est le premier article du blog.',
+            'content' => 'Ceci est le premier article du blog.',
             'image' => 'blog1.jpg',
             'blog_category_id' => 1,
         ]);
         Blog::create([
             'title' => 'Deuxième article',
-            'description' => 'Un autre article intéressant.',
+            'content' => 'Un autre article intéressant.',
             'image' => 'blog2.jpg',
             'blog_category_id' => 1,
         ]);
         Blog::create([
             'title' => 'Troisième article',
-            'description' => 'Encore du contenu pour le blog.',
+            'content' => 'Encore du contenu pour le blog.',
             'image' => 'blog3.jpg',
             'blog_category_id' => 1,
         ]);

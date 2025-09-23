@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avatars', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('path'); // Avatar file path
+            $table->string('code')->unique(); // Coupon code
+            $table->integer('percentage'); // Discount percentage
+            $table->boolean('is_active')->default(true); // Active status
+            $table->timestamp('expires_at')->nullable(); // Expiration date
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avatars');
+        Schema::dropIfExists('coupons');
     }
 };

@@ -15,15 +15,27 @@ class BillingSeeder extends Seeder
     {
         Billing::create([
             'user_id' => 1,
-            'order_id' => 1,
-            'address' => '12 rue des Lilas, Paris',
-            'total' => 470,
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john@example.com',
+            'phone_number' => '+32 123 456 789',
+            'address' => 'rue des Lilas',
+            'number' => '12',
+            'city' => 'Paris',
+            'zip_code' => '75001',
+            'country_id' => 1,
         ]);
         Billing::create([
-            'user_id' => 1,
-            'order_id' => 2,
-            'address' => '12 rue des Lilas, Paris',
-            'total' => 120,
+            'user_id' => 2,
+            'first_name' => 'Jane',
+            'last_name' => 'Smith',
+            'email' => 'jane@example.com',
+            'phone_number' => '+32 987 654 321',
+            'address' => 'avenue de la Paix',
+            'number' => '45',
+            'city' => 'Bruxelles',
+            'zip_code' => '1000',
+            'country_id' => 2,
         ]);
     }
 }

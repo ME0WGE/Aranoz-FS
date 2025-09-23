@@ -15,9 +15,17 @@ class MailingSeeder extends Seeder
     {
         Mailing::create([
             'email' => 'newsletter@example.com',
+            'subject' => 'Newsletter Subscription',
+            'message' => 'Thank you for subscribing to our newsletter!',
+            'status' => 'pending',
+            'archived' => false,
         ]);
         Mailing::create([
             'email' => 'contact@example.com',
+            'subject' => 'Contact Form Submission',
+            'message' => 'Hello, I would like to know more about your products.',
+            'status' => 'replied',
+            'archived' => false,
         ]);
     }
 }

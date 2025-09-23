@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->foreignId('blog_category_id')->constrained('blog_categories'); // Blog category: only 1
-            $table->foreignId('tag_id')->nullable()->constrained('tags'); // Blog tags: null or have 1 or more tags
             $table->timestamps();
         });
     }

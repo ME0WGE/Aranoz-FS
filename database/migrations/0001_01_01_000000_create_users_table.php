@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            // User info: name, email, role, avatar (file)
-            $table->string('name');
+            // User basic info: name, email, role, avatar
+            $table->string('name'); // Display name for registration
             $table->string('email')->unique();
             $table->string('avatar')->nullable();
             $table->foreignId('role_id')->constrained('roles');

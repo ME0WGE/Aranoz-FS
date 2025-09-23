@@ -14,14 +14,8 @@ class ContactSeeder extends Seeder
     public function run(): void
     {
         Contact::create([
-            'name' => 'Alice',
-            'email' => 'alice@example.com',
-            'message' => 'Bonjour, je souhaite en savoir plus sur vos produits.',
-        ]);
-        Contact::create([
-            'name' => 'Bob',
-            'email' => 'bob@example.com',
-            'message' => 'Avez-vous des réductions en ce moment ?',
+            'email' => 'contact@aranoz.com',
+            'phone_number' => '+32 65 12 34 56',
         ]);
     }
 }

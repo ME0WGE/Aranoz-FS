@@ -17,19 +17,22 @@ class OrderItemSeeder extends Seeder
             'order_id' => 1,
             'product_id' => 1,
             'quantity' => 2,
-            'price' => 120,
+            'product_name' => 'Chaise Scandinave',
+            'product_price' => 12000, // Price in cents
         ]);
         OrderItem::create([
             'order_id' => 1,
             'product_id' => 2,
             'quantity' => 1,
-            'price' => 350,
+            'product_name' => 'Table en bois',
+            'product_price' => 35000, // Price in cents
         ]);
         OrderItem::create([
             'order_id' => 2,
             'product_id' => 1,
             'quantity' => 1,
-            'price' => 120,
+            'product_name' => 'Chaise Scandinave',
+            'product_price' => 12000, // Price in cents
         ]);
     }
 }
