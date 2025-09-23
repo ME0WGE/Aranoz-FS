@@ -13,23 +13,28 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        Blog::create([
+        $blog1 = Blog::create([
             'title' => 'Premier article',
             'content' => 'Ceci est le premier article du blog.',
             'image' => 'blog1.jpg',
             'blog_category_id' => 1,
         ]);
-        Blog::create([
+        $blog1->tags()->attach([1, 2]); // Attach tags: moderne, bois
+
+        $blog2 = Blog::create([
             'title' => 'Deuxième article',
             'content' => 'Un autre article intéressant.',
             'image' => 'blog2.jpg',
-            'blog_category_id' => 1,
+            'blog_category_id' => 2,
         ]);
-        Blog::create([
+        $blog2->tags()->attach([2, 3]); // Attach tags: bois, design
+
+        $blog3 = Blog::create([
             'title' => 'Troisième article',
             'content' => 'Encore du contenu pour le blog.',
             'image' => 'blog3.jpg',
-            'blog_category_id' => 1,
+            'blog_category_id' => 3,
         ]);
+        $blog3->tags()->attach([1, 3]); // Attach tags: moderne, design
     }
 }
