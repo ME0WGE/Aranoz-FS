@@ -14,13 +14,13 @@ class AvatarSeeder extends Seeder
     public function run(): void
     {
         Avatar::create([
-            'url' => 'https://example.com/avatar1.png',
+            'path' => 'images/avatars/avatar1.png',
         ]);
         Avatar::create([
-            'url' => 'https://example.com/avatar2.png',
+            'path' => 'images/avatars/avatar2.png',
         ]);
         Avatar::create([
-            'url' => 'https://example.com/avatar3.png',
+            'path' => 'images/avatars/avatar3.png',
         ]);
     }
 }

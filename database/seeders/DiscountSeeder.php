@@ -14,11 +14,11 @@ class DiscountSeeder extends Seeder
     public function run(): void
     {
         Discount::create([
-            'name' => 'Aucune',
+            'name' => 'No Discount',
             'percentage' => 0,
         ]);
         Discount::create([
-            'name' => 'Promo été',
+            'name' => 'Summer Sale',
             'percentage' => 10,
         ]);
         Discount::create([

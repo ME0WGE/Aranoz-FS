@@ -14,13 +14,13 @@ class ProductCategorySeeder extends Seeder
     public function run(): void
     {
         ProductCategory::create([
-            'name' => 'Chaises',
+            'name' => 'Chairs',
         ]);
         ProductCategory::create([
             'name' => 'Tables',
         ]);
         ProductCategory::create([
-            'name' => 'Canapés',
+            'name' => 'Sofas',
         ]);
     }
 }

@@ -14,10 +14,10 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         Tag::create([
-            'name' => 'moderne',
+            'name' => 'modern',
         ]);
         Tag::create([
-            'name' => 'bois',
+            'name' => 'wood',
         ]);
         Tag::create([
             'name' => 'design',

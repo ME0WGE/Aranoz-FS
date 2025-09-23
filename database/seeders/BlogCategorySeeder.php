@@ -13,10 +13,10 @@ class BlogCategorySeeder extends Seeder
     public function run(): void
     {
         BlogCategory::create([
-            'name' => 'Actualités',
+            'name' => 'News',
         ]);
         BlogCategory::create([
-            'name' => 'Conseils',
+            'name' => 'Tips',
         ]);
         BlogCategory::create([
             'name' => 'Inspiration',

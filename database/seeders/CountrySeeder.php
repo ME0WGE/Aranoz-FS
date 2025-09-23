@@ -17,10 +17,10 @@ class CountrySeeder extends Seeder
             'name' => 'France',
         ]);
         Country::create([
-            'name' => 'Belgique',
+            'name' => 'Belgium',
         ]);
         Country::create([
-            'name' => 'Suisse',
+            'name' => 'Switzerland',
         ]);
     }
 }

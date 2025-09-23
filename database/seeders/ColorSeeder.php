@@ -14,15 +14,15 @@ class ColorSeeder extends Seeder
     public function run(): void
     {
         Color::create([
-            'name' => 'Blanc',
+            'name' => 'White',
             'hex' => '#FFFFFF',
         ]);
         Color::create([
-            'name' => 'Noir',
+            'name' => 'Black',
             'hex' => '#000000',
         ]);
         Color::create([
-            'name' => 'Bois',
+            'name' => 'Wood',
             'hex' => '#A0522D',
         ]);
     }
