@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('detail_image')->nullable();
             $table->string('title');
             $table->text('content');
+            $table->text('excerpt')->nullable();
+            $table->string('category')->nullable();
+            $table->string('date')->nullable();
+            $table->integer('comments')->nullable();
             $table->foreignId('blog_category_id')->constrained('blog_categories'); // Blog category: only 1
             $table->timestamps();
         });
