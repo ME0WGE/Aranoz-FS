@@ -1,16 +1,23 @@
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
+import Banner from '@/Components/Home/Banner';
+import FeaturedCategory from '@/Components/Home/FeaturedCategory';
+import AwesomeProducts from '@/Components/Home/AwesomeProducts';
+import WeeklySale from '@/Components/Home/WeeklySale';
+import BestSellers from '@/Components/Home/BestSellers';
+import Newsletter from '@/Components/Home/Newsletter';
 
-export default function Home() {
+export default function Home({ featuredProducts, bestSellers, products, categories, blogs, saleProduct }) {
     return (
         <AppLayout>
             <Head title="Home" />
             <div className="min-h-screen">
-                {/* Homepage content */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <h1 className="text-4xl font-bold text-gray-900 text-center">Welcome to Aranoz</h1>
-                    <p className="text-xl text-gray-600 text-center mt-4">Premium furniture for modern living</p>
-                </div>
+                <Banner />
+                <FeaturedCategory categories={categories} />
+                <AwesomeProducts products={products} />
+                <WeeklySale saleProduct={saleProduct} />
+                <BestSellers products={bestSellers} />
+                <Newsletter blogs={blogs} />
             </div>
         </AppLayout>
     );

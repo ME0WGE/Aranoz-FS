@@ -15,12 +15,19 @@ class ProductCategorySeeder extends Seeder
     {
         ProductCategory::create([
             'name' => 'Chairs',
+            'image' => 'images/feature/feature_1.png',
         ]);
         ProductCategory::create([
             'name' => 'Tables',
+            'image' => 'images/feature/feature_2.png',
         ]);
         ProductCategory::create([
             'name' => 'Sofas',
+            'image' => 'images/feature/feature_3.png',
+        ]);
+        ProductCategory::create([
+            'name' => 'Armchairs',
+            'image' => 'images/feature/feature_4.png',
         ]);
     }
 }

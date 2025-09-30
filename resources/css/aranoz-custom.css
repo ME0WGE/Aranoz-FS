@@ -1,0 +1,13 @@
+/* Custom styles for Aranoz template (animations, icons, etc.) */
+
+/* Example: Owl Carousel dots, slider-counter, etc. */
+.slider-counter {
+  /* Add custom styles here if needed */
+}
+
+/* Example: FontAwesome and Themify icons if not handled by Tailwind */
+.single_social_icon i {
+  font-size: 1.25rem;
+}
+
+/* Add more custom rules as needed for pixel-perfect reproduction */

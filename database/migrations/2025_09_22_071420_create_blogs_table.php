@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('image'); // file or url
+            $table->string('detail_image')->nullable();
             $table->string('title');
             $table->text('content');
             $table->foreignId('blog_category_id')->constrained('blog_categories'); // Blog category: only 1
