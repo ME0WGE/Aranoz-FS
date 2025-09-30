@@ -10,8 +10,10 @@ class ProductController extends Controller
 {
     public function index() {
         $products = Product::all();
-        return Inertia::render('Shop/Index', [
+        $categories = \App\Models\ProductCategory::all();
+        return Inertia::render('Category', [
             'products' => $products,
+            'categories' => $categories,
         ]);
     }
 
