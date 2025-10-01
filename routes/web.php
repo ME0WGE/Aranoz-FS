@@ -23,6 +23,14 @@ use Inertia\Inertia;
 
 // PUBLIC ROUTES
 // Cart (panier)
+Route::get('/checkout', function() {
+    $user = Auth::user();
+    $cartItems = \App\Models\Cart::with('product')->where('user_id', $user->id)->get();
+    return Inertia::render('Checkout', [
+        'cartItems' => $cartItems,
+        'user' => $user,
+    ]);
+})->middleware(['auth', 'verified'])->name('checkout');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
@@ -50,6 +58,10 @@ Route::post('/newsletter', [NewsletterSubscriptionController::class, "store"])->
 
 // ========================================
 // AUTHENTICATED USER ROUTES
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/track', [OrderController::class, 'track'])->name('orders.track');
 // ========================================
 
 Route::middleware(['auth', 'verified'])->group(function () {

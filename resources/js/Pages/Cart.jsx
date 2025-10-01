@@ -1,5 +1,5 @@
 import React from "react";
-import { router } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 
 export default function Cart({ cartItems }) {
   const handleRemove = (productId) => {
@@ -47,12 +47,20 @@ export default function Cart({ cartItems }) {
               ))}
             </tbody>
           </table>
-          <button
-            className="bg-gray-700 text-white px-4 py-2 rounded"
-            onClick={handleClear}
-          >
-            Vider le panier
-          </button>
+          <div className="flex gap-4">
+            <button
+              className="bg-gray-700 text-white px-4 py-2 rounded"
+              onClick={handleClear}
+            >
+              Vider le panier
+            </button>
+            <Link
+              href="/checkout"
+              className="bg-pink-500 text-white px-4 py-2 rounded font-bold hover:bg-pink-600 transition"
+            >
+              Passer à la commande
+            </Link>
+          </div>
         </div>
       )}
     </div>
