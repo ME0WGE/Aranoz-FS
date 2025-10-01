@@ -65,16 +65,18 @@ class AdminController extends Controller
     public function editUser($id)
     {
         $user = User::findOrFail($id);
+        $roles = \App\Models\Role::all(['id', 'name']);
         return Inertia::render('Admin/UserEdit', [
             'user' => $user,
+            'roles' => $roles,
         ]);
     }
 
     public function updateUser(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update($request->only(['name', 'email', 'role']));
-        return redirect()->route('admin.users.index');
+    $user = User::findOrFail($id);
+    $user->update($request->only(['name', 'email', 'role_id']));
+    return redirect()->route('admin.users.index')->with('success', 'Utilisateur modifié avec succès.');
     }
 
     public function destroyUser($id)

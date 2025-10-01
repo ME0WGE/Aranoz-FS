@@ -3,6 +3,7 @@ import { FaChevronDown, FaUser } from 'react-icons/fa';
 import Dropdown from '@/Components/Dropdown';
 
 export default function NavDash({ auth }) {
+    const user = auth && auth.user ? auth.user : null;
     return (
         <nav className="bg-white border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,7 +106,7 @@ export default function NavDash({ auth }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    {auth.user ? (
+                                    {user ? (
                                         <>
                                             <Dropdown.Link href="/orders">Mes commandes</Dropdown.Link>
                                             <Dropdown.Link href="/logout" method="post" as="button">
@@ -187,10 +188,10 @@ export default function NavDash({ auth }) {
                             <div className="flex items-center space-x-2 mb-2">
                                 <FaUser className="h-4 w-4 text-gray-500" />
                                 <span className="text-sm font-medium text-gray-700">
-                                    {auth.user ? 'Mon compte' : 'Connexion'}
+                                    {user ? 'Mon compte' : 'Connexion'}
                                 </span>
                             </div>
-                            {auth.user ? (
+                            {user ? (
                                 <>
                                     <Link
                                         href="/orders"
