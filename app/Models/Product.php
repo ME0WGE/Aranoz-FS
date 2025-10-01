@@ -20,4 +20,9 @@ class Product extends Model
         'discount_id',
         'color_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
 }
