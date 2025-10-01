@@ -2,7 +2,8 @@ import { Link } from '@inertiajs/react';
 import { FaChevronDown, FaUser } from 'react-icons/fa';
 import Dropdown from './Dropdown';
 
-export default function Nav({ auth }) {
+import { FaShoppingCart } from 'react-icons/fa';
+export default function Nav({ auth, cartCount }) {
     return (
         <nav className="bg-white border-b">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,6 +62,17 @@ export default function Nav({ auth }) {
                         </div>
                     </div>
 
+                    {/* Cart icon (if user is logged in) */}
+                    {auth.user && (
+                        <Link href="/cart" className="relative mr-4">
+                            <FaShoppingCart className="h-6 w-6 text-gray-700 hover:text-gray-900" />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+                    )}
                     {/* User Dropdown */}
                     <div className="flex items-center">
                         <Dropdown>

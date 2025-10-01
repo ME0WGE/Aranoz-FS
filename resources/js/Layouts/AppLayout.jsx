@@ -3,11 +3,11 @@ import Nav from '@/Components/Nav';
 import Footer from '@/Components/Footer';
 
 export default function AppLayout({ children }) {
-    const { auth } = usePage().props;
+    const { auth, cartCount } = usePage().props;
 
     return (
         <div className="min-h-screen bg-white">
-            <Nav auth={auth} />
+            <Nav auth={auth} cartCount={cartCount} />
             <main>{children}</main>
             <Footer />
         </div>

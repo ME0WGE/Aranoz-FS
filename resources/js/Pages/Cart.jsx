@@ -1,0 +1,60 @@
+import React from "react";
+import { router } from "@inertiajs/react";
+
+export default function Cart({ cartItems }) {
+  const handleRemove = (productId) => {
+    router.post("/cart/remove", { product_id: productId });
+  };
+
+  const handleClear = () => {
+    router.post("/cart/clear");
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto py-10">
+      <h1 className="text-3xl font-bold mb-6">Mon Panier</h1>
+      {cartItems.length === 0 ? (
+        <div className="text-gray-500">Votre panier est vide.</div>
+      ) : (
+        <div>
+          <table className="w-full mb-6">
+            <thead>
+              <tr className="border-b">
+                <th className="py-2 text-left">Produit</th>
+                <th className="py-2 text-left">Quantité</th>
+                <th className="py-2 text-left">Prix</th>
+                <th className="py-2"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartItems.map((item) => (
+                <tr key={item.id} className="border-b">
+                  <td className="py-2 flex items-center gap-2">
+                    <img src={item.product.image} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                    <span>{item.product.name}</span>
+                  </td>
+                  <td className="py-2">{item.quantity}</td>
+                  <td className="py-2">{item.product.price} €</td>
+                  <td className="py-2">
+                    <button
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                      onClick={() => handleRemove(item.product_id)}
+                    >
+                      Retirer
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            className="bg-gray-700 text-white px-4 py-2 rounded"
+            onClick={handleClear}
+          >
+            Vider le panier
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

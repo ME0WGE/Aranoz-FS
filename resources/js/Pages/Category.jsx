@@ -1,7 +1,7 @@
 
 import React from "react";
 import AppLayout from '@/Layouts/AppLayout';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 export default function Category({ categories, products, bestSellers }) {
     return (
@@ -104,7 +104,12 @@ export default function Category({ categories, products, bestSellers }) {
                                 <div className="single_product_text text-center">
                                     <h4 className="font-bold text-lg mb-2">{product.name}</h4>
                                     <h3 className="text-gray-700 font-bold text-xl mb-2">${product.price}</h3>
-                                    <a href="#" className="add_cart inline-block bg-pink-500 text-white px-4 py-2 rounded shadow hover:bg-pink-600 transition">+ add to cart <i className="ti-heart ml-2" /></a>
+                                    <button
+                                        className="add_cart inline-block bg-pink-500 text-white px-4 py-2 rounded shadow hover:bg-pink-600 transition"
+                                        onClick={() => router.post('/cart/add', { product_id: product.id, quantity: 1 })}
+                                    >
+                                        + add to cart <i className="ti-heart ml-2" />
+                                    </button>
                                 </div>
                             </div>
                         ))}

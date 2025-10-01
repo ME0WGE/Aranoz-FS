@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { router } from "@inertiajs/react";
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 
 export default function ProductDetails({ product, reviews, bestSellers }) {
+    const [quantity, setQuantity] = useState(1);
+
+    const handleAddToCart = () => {
+        router.post("/cart/add", {
+            product_id: product.id,
+            quantity,
+        });
+    };
+
+    const handleDecrease = () => {
+        setQuantity(q => Math.max(1, q - 1));
+    };
+    const handleIncrease = () => {
+        setQuantity(q => q + 1);
+    };
+
     return (
         <AppLayout>
             <Head title={product.name} />
@@ -41,12 +58,17 @@ export default function ProductDetails({ product, reviews, bestSellers }) {
                         <div className="mb-2 text-gray-500">Availability: <span className="text-green-600 font-medium">{product.availability}</span></div>
                         <p className="mb-6 text-gray-600">{product.description}</p>
                         <div className="flex items-center gap-2 mb-6">
-                            <button className="px-4 py-2 border rounded">-</button>
-                            <span className="px-4 py-2 border rounded">1</span>
-                            <button className="px-4 py-2 border rounded">+</button>
+                            <button className="px-4 py-2 border rounded" onClick={handleDecrease}>-</button>
+                            <span className="px-4 py-2 border rounded">{quantity}</span>
+                            <button className="px-4 py-2 border rounded" onClick={handleIncrease}>+</button>
                         </div>
                         <div className="flex gap-4 mb-8">
-                            <button className="bg-pink-500 text-white px-8 py-3 rounded shadow hover:bg-pink-600 transition">ADD TO CART</button>
+                            <button
+                                className="bg-pink-500 text-white px-8 py-3 rounded shadow hover:bg-pink-600 transition"
+                                onClick={handleAddToCart}
+                            >
+                                ADD TO CART
+                            </button>
                             <button className="bg-white border px-4 py-3 rounded shadow text-pink-500"><i className="ti-heart" /></button>
                         </div>
                     </div>
