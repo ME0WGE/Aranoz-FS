@@ -31,6 +31,9 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index');
+        }
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
         $order = Order::create([
             'user_id' => $user->id,
