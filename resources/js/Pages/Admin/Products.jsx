@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import AdminLayout from '@/Layouts/AdminLayout';
 
-export default function AdminProducts({ products }) {
+function AdminProducts({ products }) {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Product Management</h1>
@@ -33,3 +35,7 @@ export default function AdminProducts({ products }) {
     </div>
   );
 }
+
+AdminProducts.layout = (page) => <AdminLayout auth={page.props.auth} cartCount={page.props.cartCount}>{page}</AdminLayout>;
+
+export default AdminProducts;

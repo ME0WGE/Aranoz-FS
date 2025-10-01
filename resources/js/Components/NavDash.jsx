@@ -4,8 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 
 export default function NavDash({ auth }) {
     return (
-        <>
-            <nav className="bg-white border-b">
+        <nav className="bg-white border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
@@ -18,21 +17,16 @@ export default function NavDash({ auth }) {
                         {/* Navigation Links */}
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-8">
-                                {/* Admin */}
+                                {/* Dashboard */}
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <button className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium flex items-center">
-                                            Admin
+                                            Dashboard
                                             <FaChevronDown className="ml-1 h-3 w-3" />
                                         </button>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
                                         <Dropdown.Link href="/admin">Dashboard</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/users">Users</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/orders">Orders</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/products">Products</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/blog">Blog</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                                 {/* Users */}
@@ -43,37 +37,20 @@ export default function NavDash({ auth }) {
                                             <FaChevronDown className="ml-1 h-3 w-3" />
                                         </button>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
-                                        <Dropdown.Link href="/admin">Dashboard</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/users">Users</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/orders">Orders</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/products">Products</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/blog">Blog</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/users">Liste</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                                 {/* Orders */}
-                                <Link
-                                    href="/admin"
-                                    className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium"
-                                >
-                                    Orders
-                                </Link>
-                                {/* Blog */}
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <button className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium flex items-center">
-                                            Blog
+                                            Orders
                                             <FaChevronDown className="ml-1 h-3 w-3" />
                                         </button>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
-                                        <Dropdown.Link href="/admin">Dashboard</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/users">Users</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/orders">Orders</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/products">Products</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/blog">Blog</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/orders">Liste</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                                 {/* Products */}
@@ -84,13 +61,23 @@ export default function NavDash({ auth }) {
                                             <FaChevronDown className="ml-1 h-3 w-3" />
                                         </button>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
-                                        <Dropdown.Link href="/admin">Dashboard</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/users">Users</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/orders">Orders</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/products">Products</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/blog">Blog</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/products">Liste</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/categories">Catégories</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/discounts">Discounts</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/coupons">Coupons</Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                                {/* Blog */}
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <button className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium flex items-center">
+                                            Blog
+                                            <FaChevronDown className="ml-1 h-3 w-3" />
+                                        </button>
+                                    </Dropdown.Trigger>
+                                    <Dropdown.Content>
+                                        <Dropdown.Link href="/admin/blog">Articles</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                                 {/* Mailbox */}
@@ -101,13 +88,8 @@ export default function NavDash({ auth }) {
                                             <FaChevronDown className="ml-1 h-3 w-3" />
                                         </button>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
-                                        <Dropdown.Link href="/admin">Dashboard</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/users">Users</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/orders">Orders</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/products">Products</Dropdown.Link>
-                                        <Dropdown.Link href="/admin/blog">Blog</Dropdown.Link>
+                                        <Dropdown.Link href="/admin/mailbox">Répondre aux mails</Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -150,36 +132,14 @@ export default function NavDash({ auth }) {
                             <div className="text-gray-500 text-xs font-semibold uppercase tracking-wider px-3 py-2">
                                 Admin
                             </div>
-                            <Link
-                                href="/admin"
-                                className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                            >
-                                Dashboard
-                            </Link>
-                            <Link
-                                href="/admin/users"
-                                className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                            >
-                                Users
-                            </Link>
-                            <Link
-                                href="/admin/orders"
-                                className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                            >
-                                Orders
-                            </Link>
-                            <Link
-                                href="/admin/products"
-                                className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                            >
-                                Products
-                            </Link>
-                            <Link
-                                href="/admin/blog"
-                                className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium"
-                            >
-                                Blog
-                            </Link>
+                            <Link href="/admin" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Dashboard</Link>
+                            <Link href="/admin/users" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Users</Link>
+                            <Link href="/admin/orders" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Orders</Link>
+                            <Link href="/admin/products" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Products</Link>
+                            <Link href="/admin/categories" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Catégories</Link>
+                            <Link href="/admin/discounts" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Discounts</Link>
+                            <Link href="/admin/coupons" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Coupons</Link>
+                            <Link href="/admin/blog" className="text-gray-700 hover:text-gray-900 block px-3 py-2 text-base font-medium">Blog</Link>
                         </div>
 
                         {/* Mailbox */}
@@ -267,6 +227,5 @@ export default function NavDash({ auth }) {
                     </div>
                 </div>
             </nav>
-        </>
     );
 }

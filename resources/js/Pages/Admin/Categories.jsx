@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import AdminLayout from '@/Layouts/AdminLayout';
 
-export default function AdminCategories({ categories }) {
+function AdminCategories({ categories }) {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Category Management</h1>
@@ -27,3 +29,7 @@ export default function AdminCategories({ categories }) {
     </div>
   );
 }
+
+AdminCategories.layout = (page) => <AdminLayout auth={page.props.auth} cartCount={page.props.cartCount}>{page}</AdminLayout>;
+
+export default AdminCategories;

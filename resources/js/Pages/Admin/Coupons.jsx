@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import AdminLayout from '@/Layouts/AdminLayout';
 
-export default function AdminCoupons({ coupons }) {
+function AdminCoupons({ coupons }) {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Coupon Management</h1>
@@ -31,3 +33,7 @@ export default function AdminCoupons({ coupons }) {
     </div>
   );
 }
+
+AdminCoupons.layout = (page) => <AdminLayout auth={page.props.auth} cartCount={page.props.cartCount}>{page}</AdminLayout>;
+
+export default AdminCoupons;

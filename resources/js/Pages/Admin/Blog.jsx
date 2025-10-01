@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import AdminLayout from '@/Layouts/AdminLayout';
 
-export default function AdminBlog({ posts }) {
+function AdminBlog({ posts }) {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Blog Management</h1>
@@ -31,3 +33,7 @@ export default function AdminBlog({ posts }) {
     </div>
   );
 }
+
+AdminBlog.layout = (page) => <AdminLayout auth={page.props.auth} cartCount={page.props.cartCount}>{page}</AdminLayout>;
+
+export default AdminBlog;

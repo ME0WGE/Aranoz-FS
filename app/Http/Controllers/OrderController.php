@@ -36,9 +36,11 @@ class OrderController extends Controller
 
     public function adminDestroy($id)
     {
-        $order = Order::findOrFail($id);
-        $order->delete();
-        return redirect()->route('admin.orders.index');
+    $order = Order::findOrFail($id);
+    // Delete related order items first
+    $order->items()->delete();
+    $order->delete();
+    return redirect()->route('admin.orders.index');
     }
     public function adminIndex()
     {
