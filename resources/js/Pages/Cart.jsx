@@ -32,6 +32,12 @@ export default function Cart({ cartItems }) {
                   <td className="py-2 flex items-center gap-2">
                     <img src={item.product.image} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
                     <span>{item.product.name}</span>
+                    <Link
+                      href={`/products/${item.product.id}`}
+                      className="ml-2 px-2 py-1 bg-pink-100 text-pink-600 rounded text-xs hover:bg-pink-200"
+                    >
+                      Voir le produit
+                    </Link>
                   </td>
                   <td className="py-2">{item.quantity}</td>
                   <td className="py-2">{item.product.price} €</td>

@@ -40,7 +40,7 @@ class OrderController extends Controller
             'status' => 'pending',
             'total_price' => $total,
             'order_number' => uniqid('ARZ'),
-            'payment_method' => 'check',
+            'payment_method' => $request->input('payment_method', 'check'),
             'shipping_method' => 'free_worldwide',
         ]);
         foreach ($cartItems as $item) {

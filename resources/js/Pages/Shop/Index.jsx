@@ -15,6 +15,12 @@ export default function Index({ products }) {
                             {p.name}
                         </Link>
                         <p className="text-gray-500">{p.price} €</p>
+                        <Link
+                          href={`/products/${p.id}`}
+                          className="mt-2 inline-block px-2 py-1 bg-pink-100 text-pink-600 rounded text-xs hover:bg-pink-200"
+                        >
+                          Voir le produit
+                        </Link>
                     </div>
                     <button
                         className="bg-pink-500 text-white px-4 py-2 rounded shadow hover:bg-pink-600 transition"

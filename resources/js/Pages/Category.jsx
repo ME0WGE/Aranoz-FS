@@ -102,14 +102,20 @@ export default function Category({ categories, products, bestSellers }) {
                             <div key={product.id} className="single_product_item bg-white rounded-lg shadow p-6 flex flex-col items-center max-w-xs mx-auto">
                                 <img src={product.picture_main} alt={product.name} className="w-48 h-48 object-contain mb-4" />
                                 <div className="single_product_text text-center">
-                                    <h4 className="font-bold text-lg mb-2">{product.name}</h4>
-                                    <h3 className="text-gray-700 font-bold text-xl mb-2">${product.price}</h3>
-                                    <button
-                                        className="add_cart inline-block bg-pink-500 text-white px-4 py-2 rounded shadow hover:bg-pink-600 transition"
-                                        onClick={() => router.post('/cart/add', { product_id: product.id, quantity: 1 })}
-                                    >
-                                        + add to cart <i className="ti-heart ml-2" />
-                                    </button>
+                                                                        <h4 className="font-bold text-lg mb-2">{product.name}</h4>
+                                                                        <h3 className="text-gray-700 font-bold text-xl mb-2">${product.price}</h3>
+                                                                        <button
+                                                                                className="add_cart inline-block bg-pink-500 text-white px-4 py-2 rounded shadow hover:bg-pink-600 transition"
+                                                                                onClick={() => router.post('/cart/add', { product_id: product.id, quantity: 1 })}
+                                                                        >
+                                                                                + add to cart <i className="ti-heart ml-2" />
+                                                                        </button>
+                                                                        <a
+                                                                            href={`/products/${product.id}`}
+                                                                            className="mt-2 inline-block px-2 py-1 bg-pink-100 text-pink-600 rounded text-xs hover:bg-pink-200"
+                                                                        >
+                                                                            Voir le produit
+                                                                        </a>
                                 </div>
                             </div>
                         ))}
