@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import { useForm, router } from '@inertiajs/react';
 import { Head, Link } from '@inertiajs/react';
 
 export default function OrderShow({ order }) {
@@ -13,6 +15,17 @@ export default function OrderShow({ order }) {
             </div>
         );
     }
+    const [message, setMessage] = React.useState('');
+    const handleApprove = () => {
+        router.patch(`/admin/orders/${order.id}/status`, { status: 'confirmed' }, {
+            onSuccess: () => router.visit('/admin/orders'),
+        });
+    };
+    const handleCancel = () => {
+        router.patch(`/admin/orders/${order.id}/status`, { status: 'canceled' }, {
+            onSuccess: () => router.visit('/admin/orders'),
+        });
+    };
     return (
         <div className="min-h-screen bg-gray-50">
             <Head title={`Commande #${order.id}`} />
@@ -24,6 +37,13 @@ export default function OrderShow({ order }) {
                     <div className="mb-2"><span className="font-semibold">Total:</span> €{order.total_price}</div>
                     <div className="mb-2"><span className="font-semibold">Méthode de paiement:</span> {order.payment_method}</div>
                     <div className="mb-2"><span className="font-semibold">Méthode d'expédition:</span> {order.shipping_method}</div>
+                    <div className="flex gap-4 mt-4">
+                        <button onClick={handleApprove} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Approuver</button>
+                        <button onClick={handleCancel} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Annuler</button>
+                    </div>
+                    {message && (
+                        <div className="mt-4 text-center text-lg text-green-700 font-bold">{message}</div>
+                    )}
                 </div>
                 <h2 className="text-xl font-semibold mb-4">Articles</h2>
                 <ul className="bg-white shadow rounded-lg p-6">

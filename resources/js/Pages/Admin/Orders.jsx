@@ -3,9 +3,23 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 
+import { usePage } from '@inertiajs/react';
+
 function AdminOrders({ orders }) {
+  const { props } = usePage();
+  const flash = props.flash || {};
   return (
     <div className="p-8">
+      {flash.success && (
+        <div className="mb-4 p-4 bg-green-100 text-green-800 rounded font-semibold text-center">
+          {flash.success}
+        </div>
+      )}
+      {flash.error && (
+        <div className="mb-4 p-4 bg-red-100 text-red-800 rounded font-semibold text-center">
+          {flash.error}
+        </div>
+      )}
       <h1 className="text-2xl font-bold mb-6">Order Management</h1>
       <table className="min-w-full bg-white shadow rounded">
         <thead>

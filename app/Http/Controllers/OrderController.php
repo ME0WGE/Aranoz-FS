@@ -11,6 +11,20 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $status = $request->input('status');
+        if ($status === 'approved') $status = 'confirmed';
+        if ($status === 'cancelled') $status = 'canceled';
+        if (in_array($status, ['pending', 'confirmed', 'canceled'])) {
+            $order->status = $status;
+            $order->save();
+            $msg = $status === 'confirmed' ? 'Commande validée avec succès.' : ($status === 'canceled' ? 'Commande annulée.' : 'Statut mis à jour.');
+            return redirect()->route('admin.orders.index')->with('success', $msg);
+        }
+        return back()->with('error', 'Statut non autorisé.');
+    }
     public function adminShow($id)
     {
         $order = Order::with('user', 'items')->findOrFail($id);
