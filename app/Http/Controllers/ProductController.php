@@ -8,6 +8,13 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    public function adminIndex()
+    {
+        $products = Product::with('category')->get();
+        return Inertia::render('Admin/Products', [
+            'products' => $products,
+        ]);
+    }
     public function index() {
         $products = Product::all();
         $categories = \App\Models\ProductCategory::all();

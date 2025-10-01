@@ -49,6 +49,40 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
           </ul>
         </div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">User Management</h2>
+          <Link href="/admin/users" className="text-blue-600 hover:underline font-bold">Go to Users</Link>
+        </div>
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Order Management</h2>
+          <Link href="/admin/orders" className="text-blue-600 hover:underline font-bold">Go to Orders</Link>
+        </div>
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Product Management</h2>
+          <Link href="/admin/products" className="text-blue-600 hover:underline font-bold">Go to Products</Link>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Coupon Management</h2>
+          <Link href="/admin/coupons" className="text-blue-600 hover:underline font-bold">Go to Coupons</Link>
+        </div>
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Discount Management</h2>
+          <Link href="/admin/discounts" className="text-blue-600 hover:underline font-bold">Go to Discounts</Link>
+        </div>
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Category Management</h2>
+          <Link href="/admin/categories" className="text-blue-600 hover:underline font-bold">Go to Categories</Link>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="bg-white shadow rounded p-6 flex flex-col items-center">
+          <h2 className="text-lg font-semibold mb-2">Blog Management</h2>
+          <Link href="/admin/blog" className="text-blue-600 hover:underline font-bold">Go to Blog</Link>
+        </div>
+      </div>
       <div>
         <h2 className="text-xl font-semibold mb-4">Recent Users</h2>
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">

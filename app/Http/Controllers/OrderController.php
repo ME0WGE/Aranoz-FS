@@ -11,6 +11,42 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public function adminShow($id)
+    {
+        $order = Order::with('user', 'items')->findOrFail($id);
+        return Inertia::render('Admin/OrderShow', [
+            'order' => $order,
+        ]);
+    }
+
+    public function adminEdit($id)
+    {
+        $order = Order::with('user', 'items')->findOrFail($id);
+        return Inertia::render('Admin/OrderEdit', [
+            'order' => $order,
+        ]);
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update($request->only(['status', 'payment_method', 'shipping_method']));
+        return redirect()->route('admin.orders.index');
+    }
+
+    public function adminDestroy($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return redirect()->route('admin.orders.index');
+    }
+    public function adminIndex()
+    {
+        $orders = Order::with('user')->get();
+        return Inertia::render('Admin/Orders', [
+            'orders' => $orders,
+        ]);
+    }
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())->orderByDesc('created_at')->get();

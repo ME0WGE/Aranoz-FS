@@ -9,10 +9,10 @@ use Inertia\Response;
 
 class CouponController extends Controller
 {
-    public function index(): Response
+    public function index()
     {
         $coupons = Coupon::all();
-        return Inertia::render('Admin/Coupons/Index', [
+        return Inertia::render('Admin/Coupons', [
             'coupons' => $coupons,
         ]);
     }

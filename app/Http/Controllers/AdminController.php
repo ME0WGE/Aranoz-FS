@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-
 class AdminController extends Controller
 {
     public function dashboard()
@@ -36,5 +35,52 @@ class AdminController extends Controller
             'topProducts' => $topProducts,
             'recentUsers' => $recentUsers,
         ]);
+    }
+
+    public function users()
+    {
+        $users = User::with('role:id,name')->get(['id', 'name', 'email', 'role_id']);
+        // Format for frontend: add role name
+        $users = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role ? $user->role->name : null,
+            ];
+        });
+        return Inertia::render('Admin/Users', [
+            'users' => $users,
+        ]);
+    }
+
+    public function showUser($id)
+    {
+        $user = User::findOrFail($id);
+        return Inertia::render('Admin/UserShow', [
+            'user' => $user,
+        ]);
+    }
+
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return Inertia::render('Admin/UserEdit', [
+            'user' => $user,
+        ]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->only(['name', 'email', 'role']));
+        return redirect()->route('admin.users.index');
+    }
+
+    public function destroyUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.users.index');
     }
 }

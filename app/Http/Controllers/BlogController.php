@@ -8,6 +8,13 @@ use Inertia\Inertia;
 
 class BlogController extends Controller
 {
+    public function adminIndex()
+    {
+        $posts = Blog::with('category', 'tags')->get();
+        return Inertia::render('Admin/Blog', [
+            'posts' => $posts,
+        ]);
+    }
     public function index() {
         $posts = collect(Blog::with('tags')->get());
         $categories = [
