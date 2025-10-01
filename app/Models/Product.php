@@ -25,4 +25,10 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
+
+    // Relation: users who liked this product
+    public function likedBy()
+    {
+        return $this->belongsToMany(User::class, 'liked_products', 'product_id', 'user_id');
+    }
 }

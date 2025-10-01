@@ -59,6 +59,16 @@ export default function Nav({ auth, cartCount }) {
                             >
                                 Contact
                             </Link>
+
+                            {/* Admin Dashboard Link */}
+                            {auth.user && auth.user.role === 'admin' && (
+                                <Link
+                                    href="/admin/dashboard"
+                                    className="text-pink-600 hover:text-pink-800 px-3 py-2 text-sm font-bold border border-pink-200 rounded"
+                                >
+                                    Admin
+                                </Link>
+                            )}
                         </div>
                     </div>
 

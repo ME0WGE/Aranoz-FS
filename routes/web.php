@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:admin,webmaster,agent,community-manager'])->group(function () {
     
     // Admin Dashboard
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
     // Order Management (Admin, Agent)
     Route::middleware('role:admin,agent')->group(function () {
@@ -193,6 +193,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 });
 
 // ========================================
+
+// Route /admin/dashboard retirée (doublon)
 
 if (app()->environment('local')) {
     Route::get('/mail-test', function () {
