@@ -19,6 +19,12 @@ class Blog extends Model
         return $this->belongsTo(BlogCategory::class);
     }
 
+    // Alias for compatibility with existing code
+    public function category()
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
     // Many-to-many relation with tags
     public function tags()
     {
