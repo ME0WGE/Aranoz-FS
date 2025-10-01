@@ -217,7 +217,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 
     // Orders
-    Route::get('/admin/orders/{id}', [OrderController::class, 'adminShow'])->name('admin.orders.show');
+    Route::get('/admin/orders/{id}', function($id) {
+        $order = \App\Models\Order::with(['user', 'items.product'])->find($id);
+        return inertia('Admin/OrderShow', [ 'order' => $order ]);
+    })->name('admin.orders.show');
     Route::get('/admin/orders/{id}/edit', [OrderController::class, 'adminEdit'])->name('admin.orders.edit');
     Route::patch('/admin/orders/{id}', [OrderController::class, 'adminUpdate'])->name('admin.orders.update');
     Route::delete('/admin/orders/{id}', [OrderController::class, 'adminDestroy'])->name('admin.orders.destroy');
