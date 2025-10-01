@@ -15,8 +15,13 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+        $cartCount = 0;
+        if ($cartItems) {
+            $cartCount = $cartItems->sum('quantity');
+        }
         return Inertia::render('Cart', [
             'cartItems' => $cartItems,
+            'cartCount' => $cartCount,
         ]);
     }
 
@@ -41,7 +46,12 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+        return Inertia::render('Cart', [
+            'cartItems' => $cartItems,
+            'cartCount' => $cartCount,
+        ]);
     }
 
     public function remove(Request $request)
@@ -49,13 +59,23 @@ class CartController extends Controller
         $user = Auth::user();
         $productId = $request->input('product_id');
         Cart::where('user_id', $user->id)->where('product_id', $productId)->delete();
-        return redirect()->back();
+        $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+        return Inertia::render('Cart', [
+            'cartItems' => $cartItems,
+            'cartCount' => $cartCount,
+        ]);
     }
 
     public function clear()
     {
         $user = Auth::user();
         Cart::where('user_id', $user->id)->delete();
-        return redirect()->back();
+        $cartCount = 0;
+        $cartItems = [];
+        return Inertia::render('Cart', [
+            'cartItems' => $cartItems,
+            'cartCount' => $cartCount,
+        ]);
     }
 }

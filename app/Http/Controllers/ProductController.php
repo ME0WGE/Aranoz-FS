@@ -18,15 +18,19 @@ class ProductController extends Controller
     public function index() {
         $products = Product::all();
         $categories = \App\Models\ProductCategory::all();
+        $cartCount = 0;
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->sum('quantity');
+        }
         return Inertia::render('Category', [
             'products' => $products,
             'categories' => $categories,
+            'cartCount' => $cartCount,
         ]);
     }
 
     public function show($id) {
         $product = Product::with('category')->findOrFail($id);
-        // Demo thumbnails (replace with real images if needed)
         $thumbnails = [$product->image, $product->image, $product->image];
         $productData = [
             'id' => $product->id,
@@ -39,7 +43,6 @@ class ProductController extends Controller
             'description' => $product->description,
         ];
 
-        // Demo reviews (replace with real reviews if needed)
         $reviews = [
             [
                 'name' => 'Blake Ruiz',
@@ -58,7 +61,6 @@ class ProductController extends Controller
             ],
         ];
 
-        // Demo best sellers (replace with real products if needed)
         $bestSellers = Product::orderBy('id', 'desc')->take(4)->get()->map(function($item) {
             return [
                 'name' => $item->name,
@@ -67,10 +69,16 @@ class ProductController extends Controller
             ];
         });
 
+        $cartCount = 0;
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->sum('quantity');
+        }
+
         return Inertia::render('ProductDetails', [
             'product' => $productData,
             'reviews' => $reviews,
             'bestSellers' => $bestSellers,
+            'cartCount' => $cartCount,
         ]);
     }
 }

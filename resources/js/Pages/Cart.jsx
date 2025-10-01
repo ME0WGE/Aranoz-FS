@@ -3,7 +3,7 @@ import { router, Link, usePage } from "@inertiajs/react";
 import Nav from '@/Components/Nav';
 import Footer from '@/Components/Footer';
 
-export default function Cart({ cartItems }) {
+export default function Cart({ cartItems, cartCount }) {
   const { props } = usePage();
   const handleRemove = (productId) => {
     router.post("/cart/remove", { product_id: productId });
@@ -15,7 +15,7 @@ export default function Cart({ cartItems }) {
 
   return (
     <>
-      <Nav auth={props.auth} cartCount={props.cartCount} />
+      <Nav auth={props.auth} cartCount={cartCount ?? props.cartCount} />
       <div className="max-w-3xl mx-auto py-10">
         <h1 className="text-3xl font-bold mb-6">Mon Panier</h1>
         {cartItems.length === 0 ? (

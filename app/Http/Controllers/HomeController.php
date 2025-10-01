@@ -13,7 +13,7 @@ class HomeController extends Controller
         $categories = ProductCategory::all();
         $cartCount = 0;
         if (\Illuminate\Support\Facades\Auth::check()) {
-            $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->count();
+            $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->sum('quantity');
         }
         return Inertia::render('Home', [
             'categories' => $categories,

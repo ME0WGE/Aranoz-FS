@@ -3,9 +3,9 @@ import React from "react";
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Blog({ posts, categories, recentPosts, tags, instagramFeeds }) {
+export default function Blog({ posts, categories, recentPosts, tags, instagramFeeds, cartCount }) {
     return (
-        <AppLayout>
+        <AppLayout cartCount={cartCount}>
             <Head title="Shop Single" />
             {/* Banner / Breadcrumb */}
             <section className="bg-[#eaf6fa] pt-16 pb-8">

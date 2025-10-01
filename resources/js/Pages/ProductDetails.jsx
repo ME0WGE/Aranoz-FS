@@ -3,7 +3,7 @@ import { router } from "@inertiajs/react";
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 
-export default function ProductDetails({ product, reviews, bestSellers }) {
+export default function ProductDetails({ product, reviews, bestSellers, cartCount }) {
     const [quantity, setQuantity] = useState(1);
 
     const handleAddToCart = () => {
@@ -21,7 +21,7 @@ export default function ProductDetails({ product, reviews, bestSellers }) {
     };
 
     return (
-        <AppLayout>
+        <AppLayout cartCount={cartCount}>
             <Head title={product.name} />
             {/* Banner / Breadcrumb */}
             <section className="bg-[#eaf6fa] pt-16 pb-8">
