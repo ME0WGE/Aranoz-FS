@@ -24,8 +24,8 @@ export default function OrderEdit({ order }) {
   }
 
   return (
-    <div className="p-8 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Edit Order</h1>
+    <div className="p-8 bg-white max-w-lg mx-auto">
+      <h1 className="text-3xl font-extrabold mb-6 text-black">Edit Order</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block mb-1">Status</label>

@@ -27,11 +27,11 @@ export default function OrderShow({ order }) {
         });
     };
     return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-pink-50">
+    <div className="min-h-screen bg-white">
             <Head title={`Commande #${order.id}`} />
             <div className="max-w-3xl mx-auto py-10 px-4">
-                <h1 className="text-4xl font-extrabold mb-8 text-pink-700 drop-shadow">Commande #{order.id}</h1>
-                <div className="bg-white shadow-lg rounded-xl p-8 mb-6 border border-pink-100">
+                <h1 className="text-3xl font-extrabold mb-8 text-black">Commande #{order.id}</h1>
+                <div className="bg-white rounded-xl p-8 mb-6 border border-gray-200">
                     <div className="mb-2"><span className="font-semibold">Utilisateur:</span> <span className="text-blue-700 font-bold">{order.user?.name || 'N/A'}</span></div>
                     <div className="mb-2"><span className="font-semibold">Statut:</span> <span className={`px-2 py-1 rounded text-white ${order.status === 'confirmed' ? 'bg-green-500' : order.status === 'canceled' ? 'bg-red-500' : 'bg-gray-400'}`}>{order.status}</span></div>
                     <div className="mb-2"><span className="font-semibold">Total:</span> <span className="font-bold">€{order.total_price}</span></div>
@@ -45,11 +45,11 @@ export default function OrderShow({ order }) {
                         <div className="mt-4 text-center text-lg text-green-700 font-bold">{message}</div>
                     )}
                 </div>
-                <h2 className="text-2xl font-bold mb-6 text-pink-700">Articles</h2>
-                <ul className="bg-white shadow-lg rounded-xl p-6 border border-pink-100">
+                <h2 className="text-2xl font-bold mb-6 text-black">Articles</h2>
+                <ul className="bg-white rounded-xl p-6 border border-gray-200">
                     {order.items && order.items.length > 0 ? (
                         order.items.map(item => (
-                            <li key={item.id} className="mb-2 flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow hover:bg-pink-100 transition-colors">
+                            <li key={item.id} className="mb-2 flex justify-between items-center bg-white p-3 rounded-lg border border-gray-200">
                                 <span className="font-semibold">{item.product?.name || 'Produit supprimé'}</span>
                                 <span>Quantité: <span className="font-bold">{item.quantity}</span></span>
                                 <span>Prix: <span className="font-bold">€{item.price}</span></span>
