@@ -1,10 +1,25 @@
 
-
-import { Head } from '@inertiajs/react';
+import React from 'react';
+import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
+
 
 export default function Index({ contacts }) {
     const contact = contacts && contacts.length > 0 ? contacts[0] : null;
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post('/contact', {
+            onSuccess: () => reset(),
+        });
+    };
+
     return (
         <AppLayout>
             <Head title="Contact" />
@@ -34,14 +49,23 @@ export default function Index({ contacts }) {
             <section className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
                 <div className="md:col-span-2">
                     <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
-                    <form className="space-y-6" method="post" action="/contact">
-                        <textarea className="w-full border rounded-lg p-4" rows={6} name="message" placeholder="Enter Message" />
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <textarea className="w-full border rounded-lg p-4" rows={6} name="message" placeholder="Enter Message"
+                            value={data.message} onChange={e => setData('message', e.target.value)} />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input className="border rounded-lg p-4" type="text" name="name" placeholder="Enter your name" />
-                            <input className="border rounded-lg p-4" type="email" name="email" placeholder="Enter email address" />
+                            <input className="border rounded-lg p-4" type="text" name="name" placeholder="Enter your name"
+                                value={data.name} onChange={e => setData('name', e.target.value)} />
+                            <input className="border rounded-lg p-4" type="email" name="email" placeholder="Enter email address"
+                                value={data.email} onChange={e => setData('email', e.target.value)} />
                         </div>
-                        <input className="border rounded-lg p-4 w-full" type="text" name="subject" placeholder="Enter Subject" />
-                        <button type="submit" className="bg-pink-500 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-pink-600 transition">SEND MESSAGE</button>
+                        <input className="border rounded-lg p-4 w-full" type="text" name="subject" placeholder="Enter Subject"
+                            value={data.subject} onChange={e => setData('subject', e.target.value)} />
+                        <button type="submit" className="bg-pink-500 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-pink-600 transition" disabled={processing}>
+                            {processing ? 'Envoi...' : 'SEND MESSAGE'}
+                        </button>
+                        {errors.message && <div className="text-red-500 text-sm">{errors.message}</div>}
+                        {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
+                        {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
                     </form>
                 </div>
                 <div className="flex flex-col gap-8">

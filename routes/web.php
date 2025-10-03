@@ -114,10 +114,9 @@ Route::middleware(['auth', 'verified', 'role:admin,webmaster,agent,community-man
         Route::patch('/admin/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
     });
     
-        // ADMIN MAILBOX
-        Route::get('/admin/mailbox', function() {
-            return inertia('Admin/Mailbox');
-        })->name('admin.mailbox');
+    // ADMIN MAILBOX
+    Route::get('/admin/mailbox', [AdminController::class, 'mailbox'])->name('admin.mailbox');
+    Route::post('/admin/mailbox/{id}/answer', [AdminController::class, 'answerMessage'])->name('admin.mailbox.answer');
 });
 
 // ========================================

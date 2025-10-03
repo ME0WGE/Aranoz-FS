@@ -5,11 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Mailing;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminReplyMail;
 
 class AdminController extends Controller
 {
+    public function mailbox()
+    {
+        $messages = Mailing::where('archived', false)->latest()->get();
+        return Inertia::render('Admin/Mailbox', [
+            'messages' => $messages,
+        ]);
+    }
+
+    public function answerMessage(Request $request, $id)
+    {
+        $mailing = Mailing::findOrFail($id);
+        $validated = $request->validate([
+            'response' => 'required|string',
+        ]);
+    $mailing->status = 'replied';
+        $mailing->archived = true;
+        $mailing->save();
+
+    // Envoi la réponse par email à l'expéditeur
+    Mail::to($mailing->email)->send(new AdminReplyMail($validated['response']));
+
+        return redirect()->route('admin.mailbox')->with('success', 'Réponse envoyée et message archivé.');
+    }
     public function dashboard()
     {
         $stats = [
