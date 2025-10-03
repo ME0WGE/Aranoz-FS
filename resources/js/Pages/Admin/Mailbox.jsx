@@ -7,6 +7,10 @@ export default function Mailbox({ messages }) {
     const { data, setData, post, processing, errors, reset } = useForm({ response: '' });
     const [success, setSuccess] = useState(null);
 
+    // Split messages by status
+    const pendingMessages = messages.filter(msg => msg.status === 'pending');
+    const repliedMessages = messages.filter(msg => msg.status === 'replied');
+
     const handleSelect = (id) => {
         setSelectedId(id);
         reset();
@@ -31,23 +35,26 @@ export default function Mailbox({ messages }) {
             {success && <div className="mb-4 p-4 bg-green-100 text-green-700 rounded">{success}</div>}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h2 className="text-xl font-bold mb-4">Messages reçus</h2>
-                    <ul className="divide-y">
-                        {messages.length === 0 && <li className="py-4 text-gray-500">Aucun message</li>}
-                        {messages.map(msg => (
-                            <li key={msg.id} className={`py-4 cursor-pointer ${selectedId === msg.id ? 'bg-pink-50' : ''}`}
+                    <h2 className="text-xl font-bold mb-4">À répondre</h2>
+                    <ul className="space-y-4">
+                        {pendingMessages.length === 0 && <li className="py-4 text-gray-500">Aucun message à répondre</li>}
+                        {pendingMessages.map(msg => (
+                            <li key={msg.id}
+                                className={`p-6 rounded-lg shadow border transition cursor-pointer ${selectedId === msg.id ? 'bg-pink-50 border-pink-400' : 'bg-white hover:bg-gray-50 border-gray-200'}`}
                                 onClick={() => handleSelect(msg.id)}>
-                                <div className="font-bold">{msg.email}</div>
-                                <div className="text-sm text-gray-600">{msg.subject}</div>
-                                <div className="mt-2">{msg.message}</div>
-                                <div className="text-xs text-gray-400 mt-1">Status: {msg.status}</div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="font-bold text-pink-600">{msg.email}</span>
+                                    <span className="px-2 py-1 rounded text-xs font-semibold bg-yellow-100 text-yellow-700">Non répondu</span>
+                                </div>
+                                <div className="text-sm text-gray-700 font-semibold mb-1">{msg.subject}</div>
+                                <div className="text-gray-800 mb-2 whitespace-pre-line">{msg.message}</div>
+                                <div className="text-xs text-gray-400">ID: {msg.id}</div>
                             </li>
                         ))}
                     </ul>
-                </div>
-                <div>
-                    {selectedId && (
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Reply form only for pending messages */}
+                    {selectedId && pendingMessages.some(msg => msg.id === selectedId) && (
+                        <form onSubmit={handleSubmit} className="space-y-4 mt-6">
                             <h2 className="text-xl font-bold mb-2">Répondre au message</h2>
                             <textarea
                                 className="w-full border rounded-lg p-4"
@@ -67,6 +74,24 @@ export default function Mailbox({ messages }) {
                             </button>
                         </form>
                     )}
+                </div>
+                <div>
+                    <h2 className="text-xl font-bold mb-4">Déjà répondu</h2>
+                    <ul className="space-y-4">
+                        {repliedMessages.length === 0 && <li className="py-4 text-gray-500">Aucun message répondu</li>}
+                        {repliedMessages.map(msg => (
+                            <li key={msg.id}
+                                className="p-6 rounded-lg shadow border bg-gray-50 border-gray-200">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="font-bold text-pink-600">{msg.email}</span>
+                                    <span className="px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700">Répondu</span>
+                                </div>
+                                <div className="text-sm text-gray-700 font-semibold mb-1">{msg.subject}</div>
+                                <div className="text-gray-800 mb-2 whitespace-pre-line">{msg.message}</div>
+                                <div className="text-xs text-gray-400">ID: {msg.id}</div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </AppLayout>
