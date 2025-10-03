@@ -8,6 +8,41 @@ use Inertia\Inertia;
 
 class BlogController extends Controller
 {
+    public function adminStore(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'blog_category_id' => 'nullable|integer|exists:blog_categories,id',
+            'image' => 'nullable|string|max:255',
+        ]);
+        $post = Blog::create($validated);
+        return redirect()->route('admin.blog.index')->with('success', 'Article créé.');
+    }
+    public function adminCreate()
+    {
+        return \Inertia\Inertia::render('Admin/BlogCreate');
+    }
+    public function adminUpdate(Request $request, $id)
+    {
+        $post = Blog::findOrFail($id);
+        $post->update($request->only(['title', 'content']));
+        return redirect()->route('admin.blog.edit', $id)->with('success', 'Article mis à jour.');
+    }
+    public function adminEdit($id)
+    {
+        $post = Blog::with('category', 'tags')->findOrFail($id);
+        return Inertia::render('Admin/BlogEdit', [
+            'post' => $post,
+        ]);
+    }
+    public function adminShow($id)
+    {
+        $post = Blog::with('category', 'tags')->findOrFail($id);
+        return Inertia::render('Admin/BlogShow', [
+            'post' => $post,
+        ]);
+    }
     public function adminIndex()
     {
         $posts = Blog::with('category', 'tags')->get();
@@ -58,5 +93,13 @@ class BlogController extends Controller
             'blog' => $blog,
             'cartCount' => $cartCount,
         ]);
+    }
+    public function adminDestroy($id)
+    {
+        $post = Blog::findOrFail($id);
+        // Delete related comments first
+        $post->comments()->delete();
+        $post->delete();
+        return redirect()->route('admin.blog.index')->with('success', 'Article supprimé.');
     }
 }
