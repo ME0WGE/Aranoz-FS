@@ -21,6 +21,11 @@ class OrderController extends Controller
         if (in_array($status, ['pending', 'confirmed', 'canceled'])) {
             $order->status = $status;
             $order->save();
+            // Send confirmation/cancellation email
+            if ($status === 'confirmed' || $status === 'canceled') {
+                $type = $status === 'confirmed' ? 'confirmed' : 'canceled';
+                Mail::to($order->user->email)->send(new \App\Mail\OrderConfirmationMail($order, $type));
+            }
             $msg = $status === 'confirmed' ? 'Commande validée avec succès.' : ($status === 'canceled' ? 'Commande annulée.' : 'Statut mis à jour.');
             return redirect()->route('admin.orders.index')->with('success', $msg);
         }
