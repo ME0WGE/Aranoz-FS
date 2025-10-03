@@ -77,24 +77,7 @@ const Newsletter = ({ blogs }) => {
                         </div>
                     )}
 
-                    <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-8">
-                        <div className="text-center">
-                            <img src="/storage/images/icons/creative.svg" alt="Creative" className="w-12 h-12 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-gray-900">Creative Design</h3>
-                        </div>
-                        <div className="text-center">
-                            <img src="/storage/images/icons/quality.svg" alt="Quality" className="w-12 h-12 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-gray-900">Quality Guarantee</h3>
-                        </div>
-                        <div className="text-center">
-                            <img src="/storage/images/icons/delivery.svg" alt="Delivery" className="w-12 h-12 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-gray-900">Fast Delivery</h3>
-                        </div>
-                        <div className="text-center">
-                            <img src="/storage/images/icons/support.svg" alt="Support" className="w-12 h-12 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-gray-900">24/7 Support</h3>
-                        </div>
-                    </div>
+                    {/* Section 'creative design, ...' supprimée */}
                 </div>
             </div>
         </section>

@@ -14,7 +14,7 @@ const FeaturedCategory = ({ categories }) => (
                         </div>
                         <div className="flex justify-center items-end flex-1">
                             <img
-                                src={"/storage/" + category.image.replace(/^images\//, "images/")}
+                                src={`/storage/images/feature/large/${category.image.split('/').pop()}`}
                                 alt={category.name}
                                 className="max-h-[180px] object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
                             />

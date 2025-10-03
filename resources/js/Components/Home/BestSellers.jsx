@@ -9,7 +9,7 @@ const BestSellers = () => {
             id: 1,
             name: "Modern Chair",
             price: "$150.00",
-            image: "/storage/images/product/chair-1.png",
+            image: "product_1.png",
             rating: 5,
             color: "bg-white"
         },
@@ -17,7 +17,7 @@ const BestSellers = () => {
             id: 2,
             name: "Modern Chair",
             price: "$150.00",
-            image: "/storage/images/product/chair-2.png",
+            image: "product_2.png",
             rating: 4,
             color: "bg-[#F0F8F0]"
         },
@@ -25,7 +25,7 @@ const BestSellers = () => {
             id: 3,
             name: "Modern Chair",
             price: "$150.00",
-            image: "/storage/images/product/chair-3.png",
+            image: "product_3.png",
             rating: 5,
             color: "bg-[#EEF1FF]"
         },
@@ -33,7 +33,7 @@ const BestSellers = () => {
             id: 4,
             name: "Modern Chair",
             price: "$150.00",
-            image: "/storage/images/product/chair-4.png",
+            image: "product_4.png",
             rating: 4,
             color: "bg-[#FFF3EA]"
         }
@@ -95,7 +95,7 @@ const BestSellers = () => {
                                     <div className="group">
                                         <div className={`relative aspect-square rounded-lg overflow-hidden ${product.color}`}>
                                             <img
-                                                src={product.image}
+                                                src={`/storage/images/product/${product.image}`}
                                                 alt={product.name}
                                                 className="w-4/5 h-4/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain transition-transform duration-500 group-hover:scale-110"
                                             />
