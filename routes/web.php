@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\BlogController;
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::get('/orders/thankyou', function() {
+    return Inertia::render('Orders/ThankYou');
+})->middleware(['auth', 'verified'])->name('orders.thankyou');
 
 
 // PUBLIC ROUTES

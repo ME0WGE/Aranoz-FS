@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -104,8 +105,10 @@ class OrderController extends Controller
                 'quantity' => $item->quantity,
             ]);
         }
-        Cart::where('user_id', $user->id)->delete();
-        return redirect()->route('orders.show', $order->id);
+    $order->load('user', 'items');
+    Mail::to($user->email)->send(new \App\Mail\InvoiceMail($order));
+    Cart::where('user_id', $user->id)->delete();
+    return redirect()->route('orders.thankyou');
     }
 
     public function track(Request $request)
