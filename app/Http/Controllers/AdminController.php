@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public function mailbox()
     {
-        $messages = Mailing::where('archived', false)->latest()->get();
+    $messages = Mailing::latest()->get();
         return Inertia::render('Admin/Mailbox', [
             'messages' => $messages,
         ]);
