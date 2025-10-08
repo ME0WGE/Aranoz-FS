@@ -111,7 +111,7 @@ class OrderController extends Controller
     public function track(Request $request)
     {
         $order = Order::where('order_number', $request->input('order_number'))->firstOrFail();
-        return Inertia::render('Orders/Track', [
+        return Inertia::render('Track', [
             'order' => $order,
         ]);
     }

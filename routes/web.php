@@ -67,9 +67,9 @@ Route::post('/newsletter', [NewsletterSubscriptionController::class, "store"])->
 Route::middleware(['auth', 'verified'])->group(function () {
     
     // User Dashboard
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return Inertia::render('Dashboard');
+    // })->name('dashboard');
 
     // User Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -92,7 +92,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{id}/track', [OrderController::class, 'track'])->name('orders.track');
+    Route::get('/orders/track', [OrderController::class, 'track'])->name('orders.track');
 
     // Blog Comments (authenticated users can comment)
     Route::post('/blog/{id}/comment', [BlogController::class, 'comment'])->name('blog.comment');
