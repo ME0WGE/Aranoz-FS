@@ -43,7 +43,7 @@ const Banner = () => {
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
 
   return (
-    <section className="banner_part bg-[#EAF6FF]">
+    <section className="banner_part bg-[#EAF6FA]">
       <div className="max-w-[1320px] mx-auto px-5">
         <div className="relative min-h-[600px] flex items-center">
           {slides.map((slide, idx) => (

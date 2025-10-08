@@ -14,7 +14,7 @@ export default function Checkout({ cartItems, user }) {
   return (
     <AppLayout>
       <Head title="Checkout" />
-      <section className="bg-[#eaf6fa] pt-16 pb-8">
+      <section className="bg-[#EAF6FA] pt-16 pb-8">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
           <h2 className="text-4xl font-bold mb-2">Producta Checkout</h2>
           <img src="/storage/images/banner/banner_img.png" alt="Banner Chair" className="w-52 h-52 object-contain" />

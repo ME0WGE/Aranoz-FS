@@ -1,15 +1,29 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { FaChevronDown, FaUser, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 import Dropdown from './Dropdown';
 
 export default function Header({ auth, cartCount }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { url } = usePage();
+    
+    // Détermine la couleur de la navigation en fonction de la page
+    // Toutes les pages avec bannière utilisent #EAF6FA
+    const getNavBgColor = () => {
+        if (url === '/' || url.startsWith('/products') || url.startsWith('/blog') || url.startsWith('/contact') || url.startsWith('/checkout')) {
+            return 'bg-[#EAF6FA]';
+        } else {
+            // Autres pages sans bannière
+            return 'bg-white';
+        }
+    };
+    
+    const navBgColor = getNavBgColor();
 
     return (
-        <header className="bg-white shadow-sm">
+        <header className={`${navBgColor} shadow-sm`}>
             {/* Main Navigation */}
-            <nav className="bg-white">
+            <nav className={navBgColor}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-20">
                         {/* Logo */}
@@ -125,7 +139,7 @@ export default function Header({ auth, cartCount }) {
 
                 {/* Mobile menu */}
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-white border-t border-gray-200">
+                    <div className={`lg:hidden ${navBgColor} border-t border-gray-200`}>
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <Link 
                                 href="/" 

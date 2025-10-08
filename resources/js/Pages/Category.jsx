@@ -56,7 +56,7 @@ export default function Category({ categories, colors, products, bestSellers, fi
         <AppLayout cartCount={cartCount}>
             <Head title="Shop Category" />
             {/* Banner / Breadcrumb */}
-            <section className="bg-[#eaf6fa] pt-16 pb-8">
+            <section className="bg-[#EAF6FA] pt-16 pb-8">
                 <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
                     <div>
                         <h2 className="text-4xl font-bold mb-2">Shop Category</h2>

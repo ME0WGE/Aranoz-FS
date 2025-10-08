@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Contact() {
     return (
-        <div className="bg-[#eaf6fa] min-h-screen">
+        <div className="bg-[#EAF6FA] min-h-screen">
             {/* Header */}
             <header className="py-8 px-4 flex items-center justify-between max-w-6xl mx-auto">
                 <div className="font-bold text-2xl tracking-tight">Aranoz</div>
