@@ -1,8 +1,30 @@
 import React, { useState } from 'react';
+import { router } from '@inertiajs/react';
 
 const BestSellers = ({ products }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [activeTab, setActiveTab] = useState('best');
+    
+    const handleAddToCart = (productId) => {
+        router.post('/cart/add', { 
+            product_id: productId, 
+            quantity: 1 
+        }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log('Product added to cart!');
+            }
+        });
+    };
+    
+    const handleAddToWishlist = (productId) => {
+        router.post(`/liked-products/${productId}`, {}, {
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log('Product added to wishlist!');
+            }
+        });
+    };
     
     const defaultProducts = [
         {
@@ -110,12 +132,18 @@ const BestSellers = ({ products }) => {
                                             />
                                             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-all duration-300">
                                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4">
-                                                    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center transform -translate-y-10 group-hover:translate-y-0 transition-transform duration-300 hover:bg-[#FF3368] hover:text-white">
+                                                    <button 
+                                                        onClick={() => handleAddToWishlist(product.id)}
+                                                        className="w-12 h-12 bg-white rounded-full flex items-center justify-center transform -translate-y-10 group-hover:translate-y-0 transition-transform duration-300 hover:bg-[#FF3368] hover:text-white"
+                                                    >
                                                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                         </svg>
                                                     </button>
-                                                    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300 hover:bg-[#FF3368] hover:text-white">
+                                                    <button 
+                                                        onClick={() => handleAddToCart(product.id)}
+                                                        className="w-12 h-12 bg-white rounded-full flex items-center justify-center transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300 hover:bg-[#FF3368] hover:text-white"
+                                                    >
                                                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                                         </svg>

@@ -35,6 +35,7 @@ class CartController extends Controller
             'user_id' => $user->id,
             'product_id' => $productId,
         ])->first();
+        
         if ($cartItem) {
             $cartItem->quantity += $quantity;
             $cartItem->save();
@@ -47,9 +48,10 @@ class CartController extends Controller
         }
 
         $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
-        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
-        return Inertia::render('Cart', [
-            'cartItems' => $cartItems,
+        
+        // Return back with updated cart count
+        return back()->with([
+            'success' => 'Product added to cart!',
             'cartCount' => $cartCount,
         ]);
     }

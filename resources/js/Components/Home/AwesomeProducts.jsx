@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { router } from '@inertiajs/react';
 
 const AwesomeProducts = ({ products }) => {
     const [activeTab, setActiveTab] = useState('best');
@@ -10,6 +11,19 @@ const AwesomeProducts = ({ products }) => {
     
     const nextPage = () => setCurrentPage(prev => (prev + 1) % totalPages);
     const prevPage = () => setCurrentPage(prev => (prev - 1 + totalPages) % totalPages);
+    
+    const handleAddToCart = (productId) => {
+        router.post('/cart/add', { 
+            product_id: productId, 
+            quantity: 1 
+        }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                // Optionally show a success message
+                console.log('Product added to cart!');
+            }
+        });
+    };
 
     return (
         <section className="py-20 bg-white">
@@ -50,7 +64,10 @@ const AwesomeProducts = ({ products }) => {
                                     {product.name}
                                 </h3>
                                 <p className="text-gray-700 font-normal text-base mb-4">€{(product.price/100).toFixed(2)}</p>
-                                <button className="bg-[#FF3368] text-white px-6 py-2 rounded text-sm font-medium hover:bg-[#ff1f5a] transition-colors duration-300 uppercase tracking-wide">
+                                <button 
+                                    onClick={() => handleAddToCart(product.id)}
+                                    className="bg-[#FF3368] text-white px-6 py-2 rounded text-sm font-medium hover:bg-[#ff1f5a] transition-colors duration-300 uppercase tracking-wide"
+                                >
                                     + Add to Cart
                                 </button>
                             </div>

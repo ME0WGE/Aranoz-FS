@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "@inertiajs/react";
 
 const FeaturedCategory = ({ categories }) => (
     <section className="feature_part py-20 bg-white">
@@ -11,9 +12,12 @@ const FeaturedCategory = ({ categories }) => (
                         <div>
                             <p className="text-xs text-gray-700 mb-2">Premium Quality</p>
                             <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
-                            <button className="bg-[#FF3368] text-white px-6 py-2 rounded text-sm font-medium hover:bg-[#ff1f5a] transition-colors duration-300 uppercase tracking-wide">
+                            <Link 
+                                href={`/products`}
+                                className="inline-block bg-[#FF3368] text-white px-6 py-2 rounded text-sm font-medium hover:bg-[#ff1f5a] transition-colors duration-300 uppercase tracking-wide"
+                            >
                                 Explore Now
-                            </button>
+                            </Link>
                         </div>
                         <div className="flex justify-center items-end flex-1">
                             <img
