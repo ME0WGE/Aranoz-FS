@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-const BestSellers = () => {
+const BestSellers = ({ products }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [activeTab, setActiveTab] = useState('best');
     
-    const products = [
+    const defaultProducts = [
         {
             id: 1,
-            name: "Modern Chair",
+            name: "Quartz Belt Watch",
             price: "$150.00",
             image: "product_1.png",
             rating: 5,
@@ -15,7 +15,7 @@ const BestSellers = () => {
         },
         {
             id: 2,
-            name: "Modern Chair",
+            name: "Quartz Belt Watch",
             price: "$150.00",
             image: "product_2.png",
             rating: 4,
@@ -23,7 +23,7 @@ const BestSellers = () => {
         },
         {
             id: 3,
-            name: "Modern Chair",
+            name: "Quartz Belt Watch",
             price: "$150.00",
             image: "product_3.png",
             rating: 5,
@@ -31,16 +31,25 @@ const BestSellers = () => {
         },
         {
             id: 4,
-            name: "Modern Chair",
+            name: "Quartz Belt Watch",
             price: "$150.00",
             image: "product_4.png",
             rating: 4,
             color: "bg-[#FFF3EA]"
         }
     ];
+    
+    const displayProducts = products && products.length > 0 ? products.slice(0, 4).map(p => ({
+        id: p.id,
+        name: p.name,
+        price: `$${(p.price/100).toFixed(2)}`,
+        image: p.picture_main,
+        rating: 5,
+        color: "bg-white"
+    })) : defaultProducts;
 
     const itemsPerSlide = 4;
-    const totalSlides = Math.ceil(products.length / itemsPerSlide);
+    const totalSlides = Math.ceil(displayProducts.length / itemsPerSlide);
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -87,7 +96,7 @@ const BestSellers = () => {
                                 transform: `translateX(-${currentSlide * 100}%)`
                             }}
                         >
-                            {products.map((product) => (
+                            {displayProducts.map((product) => (
                                 <div
                                     key={product.id}
                                     className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4"

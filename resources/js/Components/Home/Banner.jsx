@@ -8,23 +8,23 @@ const slides = [
     id: 1,
     title: "Wood & Cloth Sofa",
     description:
-      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
   image: "/storage/images/banner/banner_img.png",
     number: "01"
   },
   {
     id: 2,
-    title: "Modern Furniture",
+    title: "Cloth & Wood Sofa",
     description:
-      "Quality comfort for your home with modern designs and premium materials.",
+      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
   image: "/storage/images/banner/TemplateB.png",
     number: "02"
   },
   {
     id: 3,
-    title: "Elegant Ottoman",
+    title: "Wood & Cloth Sofa",
     description:
-      "Discover our elegant ottoman collection for a touch of luxury in your living room.",
+      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
   image: "/storage/images/banner/banner_img.png",
     number: "03"
   },

@@ -48,7 +48,7 @@ const WeeklySale = ({ saleProduct }) => {
                     
                     <div className="lg:pl-8">
                         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-12">
-                            Weekly Sale on<br />{saleProduct?.discount ? `${saleProduct.discount}% Off` : ''} {saleProduct?.name}
+                            Weekly Sale on<br />{saleProduct?.discount ? `${saleProduct.discount}% Off All Products` : '60% Off All Products'}
                         </h2>
                         
                         <div className="grid grid-cols-4 gap-6 mb-12">
@@ -79,7 +79,7 @@ const WeeklySale = ({ saleProduct }) => {
                         </div>
 
                         <button className="bg-[#FF3368] text-white px-12 py-4 rounded hover:bg-[#ff1f5a] transition-colors duration-300 text-sm uppercase tracking-wide font-medium">
-                            Shop Now
+                            Book Now
                         </button>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import Nav from '@/Components/Nav';
+import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 
 export default function AppLayout({ children, cartCount }) {
@@ -7,7 +7,7 @@ export default function AppLayout({ children, cartCount }) {
 
     return (
         <div className="min-h-screen bg-white">
-            <Nav auth={auth} cartCount={cartCount ?? usePage().props.cartCount} />
+            <Header auth={auth} cartCount={cartCount ?? usePage().props.cartCount} />
             <main>{children}</main>
             <Footer />
         </div>

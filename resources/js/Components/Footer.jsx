@@ -176,7 +176,7 @@ export default function Footer() {
                         <div className="space-y-4">
                             <h4 className="text-lg font-semibold text-gray-900">Newsletter</h4>
                             <p className="text-gray-600 text-sm">
-                                Subscribe to get updates on new products and exclusive offers.
+                                Heaven fruitful doesn't over lesser in days. Appear creeping
                             </p>
                             <form className="space-y-3">
                                 <div className="flex">
@@ -184,18 +184,18 @@ export default function Footer() {
                                         type="email"
                                         name="email"
                                         id="newsletter-form-email"
-                                        placeholder="Email Address"
-                                        className="flex-1 px-3 py-2 text-sm text-gray-900 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Email address"
+                                        className="flex-1 px-3 py-2 text-sm text-gray-900 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#FF3368] focus:border-[#FF3368]"
                                         onFocus={e => (e.target.placeholder = '')}
-                                        onBlur={e => (e.target.placeholder = 'Email Address')}
+                                        onBlur={e => (e.target.placeholder = 'Email address')}
                                     />
                                     <button
                                         type="submit"
                                         name="submit"
                                         id="newsletter-submit"
-                                        className="bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-medium text-white rounded-r-md transition duration-300"
+                                        className="bg-[#FF3368] hover:bg-[#ff1f5a] px-4 py-2 text-sm font-medium text-white rounded-r-md transition duration-300"
                                     >
-                                        subscribe
+                                        Subscribe
                                     </button>
                                 </div>
                             </form>
@@ -210,21 +210,21 @@ export default function Footer() {
                     <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
                         <div className="text-gray-500 text-sm">
                             <p>
-                                Copyright &copy; {new Date().getFullYear()} Aranoz. All rights reserved | Made with{' '}
-                                <FaHeart /> by Kamil Baldyga
+                                Copyright &copy; All rights reserved | made with{' '}
+                                <FaHeart className="inline text-red-500" /> by Kamil Baldyga
                             </p>
                         </div>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition duration-300">
+                            <a href="#" className="text-gray-400 hover:text-[#FF3368] transition duration-300">
                                 <FaFacebookF className="h-5 w-5" />
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition duration-300">
+                            <a href="#" className="text-gray-400 hover:text-[#FF3368] transition duration-300">
                                 <FaTwitter className="h-5 w-5" />
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition duration-300">
+                            <a href="#" className="text-gray-400 hover:text-[#FF3368] transition duration-300">
                                 <FaGlobe className="h-5 w-5" />
                             </a>
-                            <a href="#" className="text-gray-400 hover:text-blue-600 transition duration-300">
+                            <a href="#" className="text-gray-400 hover:text-[#FF3368] transition duration-300">
                                 <FaBehance className="h-5 w-5" />
                             </a>
                         </div>

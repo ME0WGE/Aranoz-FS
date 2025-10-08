@@ -65,19 +65,6 @@ const Newsletter = ({ blogs }) => {
                         )}
                     </form>
 
-                    {/* Example: Display latest blog titles if blogs prop is provided */}
-                    {blogs && blogs.length > 0 && (
-                        <div className="mt-12">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-4">Latest Blog Posts</h3>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {blogs.slice(0, 4).map(blog => (
-                                    <li key={blog.id} className="text-left text-gray-700 text-sm truncate">{blog.title}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-
-                    {/* Section 'creative design, ...' supprimée */}
                 </div>
             </div>
         </section>
