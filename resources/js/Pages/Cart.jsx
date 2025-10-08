@@ -6,11 +6,11 @@ import Footer from '@/Components/Footer';
 export default function Cart({ cartItems, cartCount }) {
   const { props } = usePage();
   const handleRemove = (productId) => {
-    router.post("/cart/remove", { product_id: productId });
+    router.delete(`/cart/remove/${productId}`);
   };
 
   const handleClear = () => {
-    router.post("/cart/clear");
+    router.delete("/cart/clear");
   };
 
   return (

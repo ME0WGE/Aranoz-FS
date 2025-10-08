@@ -54,11 +54,10 @@ class CartController extends Controller
         ]);
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
         $user = Auth::user();
-        $productId = $request->input('product_id');
-        Cart::where('user_id', $user->id)->where('product_id', $productId)->delete();
+        Cart::where('user_id', $user->id)->where('product_id', $id)->delete();
         $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
         $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
         return Inertia::render('Cart', [
