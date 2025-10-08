@@ -108,11 +108,53 @@ class OrderController extends Controller
         return redirect()->route('orders.show', $order->id);
     }
 
+    public function trackForm()
+    {
+        $user = Auth::user();
+        $recentOrders = Order::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get(['id', 'order_number', 'status', 'total_price', 'created_at']);
+            
+        return Inertia::render('Track', [
+            'order' => null,
+            'recentOrders' => $recentOrders,
+            'auth' => [
+                'user' => $user
+            ]
+        ]);
+    }
+
     public function track(Request $request)
     {
-        $order = Order::where('order_number', $request->input('order_number'))->firstOrFail();
+        $orderNumber = $request->input('order_number');
+        $user = Auth::user();
+        
+        if (!$orderNumber) {
+            return back()->withErrors(['order_number' => 'Le numéro de commande est requis.']);
+        }
+
+        // Vérifier que la commande appartient à l'utilisateur connecté
+        $order = Order::with(['user', 'items.product'])
+            ->where('order_number', $orderNumber)
+            ->where('user_id', $user->id)
+            ->first();
+        
+        if (!$order) {
+            return back()->withErrors(['order_number' => 'Aucune commande trouvée avec ce numéro ou vous n\'avez pas l\'autorisation de voir cette commande.']);
+        }
+
+        $recentOrders = Order::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get(['id', 'order_number', 'status', 'total_price', 'created_at']);
+
         return Inertia::render('Track', [
             'order' => $order,
+            'recentOrders' => $recentOrders,
+            'auth' => [
+                'user' => $user
+            ]
         ]);
     }
 }

@@ -34,7 +34,7 @@ export default function Nav({ auth, cartCount }) {
 
                                 <Dropdown.Content>
                                     <Dropdown.Link href="/products">Categories</Dropdown.Link>
-                                    <Dropdown.Link href="/orders/track">Track your order</Dropdown.Link>
+                                    <Dropdown.Link href={route('track.form')}>Track your order</Dropdown.Link>
                                 </Dropdown.Content>
                             </Dropdown>
 

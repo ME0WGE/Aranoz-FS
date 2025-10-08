@@ -22,19 +22,6 @@ use Inertia\Inertia;
 
 
 // PUBLIC ROUTES
-// Cart (panier)
-Route::get('/checkout', function() {
-    $user = Auth::user();
-    $cartItems = \App\Models\Cart::with('product')->where('user_id', $user->id)->get();
-    return Inertia::render('Checkout', [
-        'cartItems' => $cartItems,
-        'user' => $user,
-    ]);
-})->middleware(['auth', 'verified'])->name('checkout');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 // ========================================
 
 // Homepage
@@ -58,10 +45,6 @@ Route::post('/newsletter', [NewsletterSubscriptionController::class, "store"])->
 
 // ========================================
 // AUTHENTICATED USER ROUTES
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/track', [OrderController::class, 'track'])->name('orders.track');
 // ========================================
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -82,6 +65,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    
+    // Checkout
+    Route::get('/checkout', function() {
+        $user = Auth::user();
+        $cartItems = \App\Models\Cart::with('product')->where('user_id', $user->id)->get();
+        return Inertia::render('Checkout', [
+            'cartItems' => $cartItems,
+            'user' => $user,
+        ]);
+    })->name('checkout');
 
     // Liked Products (Wishlist)
     Route::get('/liked-products', [LikedProductController::class, 'index'])->name('liked-products.index');
@@ -90,9 +83,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/track', [OrderController::class, 'track'])->name('orders.track');
+    
+    // Order Tracking (authenticated users only) - MUST be before orders/{id}
+    Route::get('/orders/track', [OrderController::class, 'trackForm'])->name('track.form');
+    Route::post('/orders/track', [OrderController::class, 'track'])->name('track.search');
+    
+    // Order show (with parameter) - MUST be after specific routes
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
     // Blog Comments (authenticated users can comment)
     Route::post('/blog/{id}/comment', [BlogController::class, 'comment'])->name('blog.comment');
@@ -196,16 +194,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/reports', [AdminController::class, 'reports'])->name('admin.reports');
 });
 
-// Admin Management Pages
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index');
-    Route::get('/admin/orders', [OrderController::class, 'adminIndex'])->name('admin.orders.index');
-    Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products.index');
-    Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
-    Route::get('/admin/blog', [BlogController::class, 'adminIndex'])->name('admin.blog.index');
-    Route::get('/admin/categories', [ProductCategoryController::class, 'index'])->name('admin.categories.index');
-    Route::get('/admin/discounts', [DiscountController::class, 'index'])->name('admin.discounts.index');
-});
+// Admin Management Pages - REMOVED (duplicates)
 
 // Admin CRUD routes
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -216,10 +205,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 
     // Orders
-    Route::get('/admin/orders/{id}', function($id) {
-        $order = \App\Models\Order::with(['user', 'items.product'])->find($id);
-        return inertia('Admin/OrderShow', [ 'order' => $order ]);
-    })->name('admin.orders.show');
+    Route::get('/admin/orders/{id}', [OrderController::class, 'adminShow'])->name('admin.orders.show');
     Route::get('/admin/orders/{id}/edit', [OrderController::class, 'adminEdit'])->name('admin.orders.edit');
     Route::patch('/admin/orders/{id}', [OrderController::class, 'adminUpdate'])->name('admin.orders.update');
     Route::delete('/admin/orders/{id}', [OrderController::class, 'adminDestroy'])->name('admin.orders.destroy');
