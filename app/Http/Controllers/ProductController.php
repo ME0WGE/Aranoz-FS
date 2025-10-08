@@ -164,4 +164,146 @@ class ProductController extends Controller
             'cartCount' => $cartCount,
         ]);
     }
+
+    // Admin Methods
+    public function create()
+    {
+        $categories = \App\Models\ProductCategory::all();
+        $colors = \App\Models\Color::all();
+        $discounts = \App\Models\Discount::all();
+        
+        return Inertia::render('Admin/Products/Create', [
+            'categories' => $categories,
+            'colors' => $colors,
+            'discounts' => $discounts,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock_quantity' => 'required|integer|min:0',
+            'product_category_id' => 'required|exists:product_categories,id',
+            'color_id' => 'required|exists:colors,id',
+            'discount_id' => 'nullable|exists:discounts,id',
+            'picture_main' => 'required|image|max:2048',
+            'picture_rear' => 'nullable|image|max:2048',
+            'picture_left' => 'nullable|image|max:2048',
+            'picture_right' => 'nullable|image|max:2048',
+            'pinned' => 'boolean',
+        ]);
+
+        // Handle image uploads
+        if ($request->hasFile('picture_main')) {
+            $path = $request->file('picture_main')->store('images/product', 'public');
+            $validated['picture_main'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_rear')) {
+            $path = $request->file('picture_rear')->store('images/product', 'public');
+            $validated['picture_rear'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_left')) {
+            $path = $request->file('picture_left')->store('images/product', 'public');
+            $validated['picture_left'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_right')) {
+            $path = $request->file('picture_right')->store('images/product', 'public');
+            $validated['picture_right'] = '/storage/' . $path;
+        }
+
+        // Convert price to cents
+        $validated['price'] = $validated['price'] * 100;
+
+        Product::create($validated);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+    }
+
+    public function edit($id)
+    {
+        $product = Product::with(['category', 'color', 'discount'])->findOrFail($id);
+        $categories = \App\Models\ProductCategory::all();
+        $colors = \App\Models\Color::all();
+        $discounts = \App\Models\Discount::all();
+        
+        return Inertia::render('Admin/Products/Edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'colors' => $colors,
+            'discounts' => $discounts,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock_quantity' => 'required|integer|min:0',
+            'product_category_id' => 'required|exists:product_categories,id',
+            'color_id' => 'required|exists:colors,id',
+            'discount_id' => 'nullable|exists:discounts,id',
+            'picture_main' => 'nullable|image|max:2048',
+            'picture_rear' => 'nullable|image|max:2048',
+            'picture_left' => 'nullable|image|max:2048',
+            'picture_right' => 'nullable|image|max:2048',
+            'pinned' => 'boolean',
+        ]);
+
+        // Handle image uploads
+        if ($request->hasFile('picture_main')) {
+            $path = $request->file('picture_main')->store('images/product', 'public');
+            $validated['picture_main'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_rear')) {
+            $path = $request->file('picture_rear')->store('images/product', 'public');
+            $validated['picture_rear'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_left')) {
+            $path = $request->file('picture_left')->store('images/product', 'public');
+            $validated['picture_left'] = '/storage/' . $path;
+        }
+        
+        if ($request->hasFile('picture_right')) {
+            $path = $request->file('picture_right')->store('images/product', 'public');
+            $validated['picture_right'] = '/storage/' . $path;
+        }
+
+        // Convert price to cents
+        if (isset($validated['price'])) {
+            $validated['price'] = $validated['price'] * 100;
+        }
+
+        $product->update($validated);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    public function pin($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->pinned = !$product->pinned;
+        $product->save();
+
+        return back()->with('success', 'Product pin status updated!');
+    }
 }

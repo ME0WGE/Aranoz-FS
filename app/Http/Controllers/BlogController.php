@@ -59,4 +59,196 @@ class BlogController extends Controller
             'cartCount' => $cartCount,
         ]);
     }
+
+    // Admin Blog CRUD Methods
+    public function create()
+    {
+        $categories = \App\Models\BlogCategory::all();
+        $tags = \App\Models\Tag::all();
+        
+        return Inertia::render('Admin/Blog/Create', [
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'blog_category_id' => 'required|exists:blog_categories,id',
+            'image' => 'required|image|max:2048',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
+        ]);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images/blog', 'public');
+            $validated['image'] = '/storage/' . $path;
+        }
+
+        $blog = Blog::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'blog_category_id' => $validated['blog_category_id'],
+            'image' => $validated['image'],
+            'user_id' => Auth::id(),
+        ]);
+
+        // Attach tags
+        if (isset($validated['tags'])) {
+            $blog->tags()->sync($validated['tags']);
+        }
+
+        return redirect()->route('admin.blog.index')->with('success', 'Blog post created successfully!');
+    }
+
+    public function edit($id)
+    {
+        $blog = Blog::with(['category', 'tags'])->findOrFail($id);
+        $categories = \App\Models\BlogCategory::all();
+        $tags = \App\Models\Tag::all();
+        
+        return Inertia::render('Admin/Blog/Edit', [
+            'blog' => $blog,
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $blog = Blog::findOrFail($id);
+        
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'blog_category_id' => 'required|exists:blog_categories,id',
+            'image' => 'nullable|image|max:2048',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
+        ]);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images/blog', 'public');
+            $validated['image'] = '/storage/' . $path;
+        }
+
+        $blog->update([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'blog_category_id' => $validated['blog_category_id'],
+            'image' => $validated['image'] ?? $blog->image,
+        ]);
+
+        // Sync tags
+        if (isset($validated['tags'])) {
+            $blog->tags()->sync($validated['tags']);
+        }
+
+        return redirect()->route('admin.blog.index')->with('success', 'Blog post updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $blog = Blog::findOrFail($id);
+        $blog->tags()->detach(); // Remove tag associations
+        $blog->delete();
+
+        return redirect()->route('admin.blog.index')->with('success', 'Blog post deleted successfully!');
+    }
+
+    // Blog Categories Management
+    public function categoriesIndex()
+    {
+        $categories = \App\Models\BlogCategory::withCount('blogs')->get();
+        
+        return Inertia::render('Admin/BlogCategories', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function categoryStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:blog_categories,name',
+        ]);
+
+        \App\Models\BlogCategory::create($validated);
+
+        return back()->with('success', 'Category created successfully!');
+    }
+
+    public function categoryUpdate(Request $request, $id)
+    {
+        $category = \App\Models\BlogCategory::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:blog_categories,name,' . $id,
+        ]);
+
+        $category->update($validated);
+
+        return back()->with('success', 'Category updated successfully!');
+    }
+
+    public function categoryDestroy($id)
+    {
+        $category = \App\Models\BlogCategory::findOrFail($id);
+        
+        // Check if category has blogs
+        if ($category->blogs()->count() > 0) {
+            return back()->with('error', 'Cannot delete category with existing blog posts!');
+        }
+        
+        $category->delete();
+
+        return back()->with('success', 'Category deleted successfully!');
+    }
+
+    // Blog Tags Management
+    public function tagsIndex()
+    {
+        $tags = \App\Models\Tag::withCount('blogs')->get();
+        
+        return Inertia::render('Admin/BlogTags', [
+            'tags' => $tags,
+        ]);
+    }
+
+    public function tagStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:tags,name',
+        ]);
+
+        \App\Models\Tag::create($validated);
+
+        return back()->with('success', 'Tag created successfully!');
+    }
+
+    public function tagUpdate(Request $request, $id)
+    {
+        $tag = \App\Models\Tag::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:tags,name,' . $id,
+        ]);
+
+        $tag->update($validated);
+
+        return back()->with('success', 'Tag updated successfully!');
+    }
+
+    public function tagDestroy($id)
+    {
+        $tag = \App\Models\Tag::findOrFail($id);
+        $tag->blogs()->detach(); // Remove associations
+        $tag->delete();
+
+        return back()->with('success', 'Tag deleted successfully!');
+    }
 }

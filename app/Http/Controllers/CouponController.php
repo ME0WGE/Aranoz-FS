@@ -17,6 +17,11 @@ class CouponController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('Admin/Coupons/Create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -29,6 +34,15 @@ class CouponController extends Controller
 
         return redirect()->route('admin.coupons.index')
             ->with('success', 'Coupon created successfully!');
+    }
+
+    public function edit($id)
+    {
+        $coupon = Coupon::findOrFail($id);
+        
+        return Inertia::render('Admin/Coupons/Edit', [
+            'coupon' => $coupon,
+        ]);
     }
 
     public function update(Request $request, $id)

@@ -11,6 +11,7 @@ class Blog extends Model
         'content',
         'image',
         'blog_category_id',
+        'user_id',
     ];
 
     // Relation with blog category

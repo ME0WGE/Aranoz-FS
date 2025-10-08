@@ -111,4 +111,123 @@ class AdminController extends Controller
         $user->delete();
         return redirect()->route('admin.users.index');
     }
+
+    public function updateUserRole(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        
+        $validated = $request->validate([
+            'role_id' => 'required|exists:roles,id',
+        ]);
+
+        $user->update(['role_id' => $validated['role_id']]);
+
+        return back()->with('success', 'User role updated successfully!');
+    }
+
+    public function analytics()
+    {
+        $stats = [
+            'totalRevenue' => Order::where('status', '!=', 'canceled')->sum('total_price'),
+            'totalOrders' => Order::count(),
+            'pendingOrders' => Order::where('status', 'pending')->count(),
+            'confirmedOrders' => Order::where('status', 'confirmed')->count(),
+            'canceledOrders' => Order::where('status', 'canceled')->count(),
+            'deliveredOrders' => Order::where('status', 'delivered')->count(),
+            'totalUsers' => User::count(),
+            'totalProducts' => Product::count(),
+            'lowStockProducts' => Product::where('stock_quantity', '<', 10)->count(),
+        ];
+
+        // Monthly sales data (last 12 months)
+        $monthlySales = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $monthlySales[] = [
+                'month' => $date->format('M Y'),
+                'sales' => Order::whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->where('status', '!=', 'canceled')
+                    ->sum('total_price') / 100, // Convert to euros
+            ];
+        }
+
+        // Top selling products
+        $topProducts = Product::withCount('likedBy')
+            ->orderByDesc('liked_by_count')
+            ->take(10)
+            ->get();
+
+        // Category sales distribution
+        $categorySales = \App\Models\ProductCategory::withCount('products')
+            ->get()
+            ->map(function ($category) {
+                $totalSales = OrderItem::whereHas('product', function ($query) use ($category) {
+                    $query->where('product_category_id', $category->id);
+                })->sum('price');
+                
+                return [
+                    'name' => $category->name,
+                    'sales' => $totalSales / 100,
+                    'products_count' => $category->products_count,
+                ];
+            });
+
+        return Inertia::render('Admin/Analytics', [
+            'stats' => $stats,
+            'monthlySales' => $monthlySales,
+            'topProducts' => $topProducts,
+            'categorySales' => $categorySales,
+        ]);
+    }
+
+    public function reports()
+    {
+        // Sales report
+        $salesReport = [
+            'today' => Order::whereDate('created_at', today())
+                ->where('status', '!=', 'canceled')
+                ->sum('total_price') / 100,
+            'thisWeek' => Order::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                ->where('status', '!=', 'canceled')
+                ->sum('total_price') / 100,
+            'thisMonth' => Order::whereMonth('created_at', now()->month)
+                ->where('status', '!=', 'canceled')
+                ->sum('total_price') / 100,
+            'thisYear' => Order::whereYear('created_at', now()->year)
+                ->where('status', '!=', 'canceled')
+                ->sum('total_price') / 100,
+        ];
+
+        // Customer report
+        $customerReport = [
+            'totalCustomers' => User::count(),
+            'newThisMonth' => User::whereMonth('created_at', now()->month)->count(),
+            'activeCustomers' => User::whereHas('orders')->count(),
+        ];
+
+        // Product report
+        $productReport = [
+            'totalProducts' => Product::count(),
+            'lowStock' => Product::where('stock_quantity', '<', 10)->count(),
+            'outOfStock' => Product::where('stock_quantity', 0)->count(),
+            'totalValue' => Product::sum('price') / 100,
+        ];
+
+        // Order status report
+        $orderStatusReport = [
+            'pending' => Order::where('status', 'pending')->count(),
+            'confirmed' => Order::where('status', 'confirmed')->count(),
+            'sent' => Order::where('status', 'sent')->count(),
+            'delivered' => Order::where('status', 'delivered')->count(),
+            'canceled' => Order::where('status', 'canceled')->count(),
+        ];
+
+        return Inertia::render('Admin/Reports', [
+            'salesReport' => $salesReport,
+            'customerReport' => $customerReport,
+            'productReport' => $productReport,
+            'orderStatusReport' => $orderStatusReport,
+        ]);
+    }
 }
