@@ -12,7 +12,7 @@ export default function Home({ featuredProducts, bestSellers, products, categori
         <AppLayout>
             <Head title="Home" />
             <div className="min-h-screen">
-                <Banner />
+                <Banner featuredProducts={featuredProducts} />
                 <FeaturedCategory categories={categories} />
                 <AwesomeProducts products={products} />
                 <WeeklySale saleProduct={saleProduct} />

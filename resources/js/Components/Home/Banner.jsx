@@ -2,45 +2,68 @@
 
 
 import React, { useState, useEffect } from "react";
+import { router } from '@inertiajs/react';
 
-const slides = [
-  {
-    id: 1,
-    title: "Wood & Cloth Sofa",
-    description:
-      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
-  image: "/storage/images/banner/banner_img.png",
-    number: "01"
-  },
-  {
-    id: 2,
-    title: "Cloth & Wood Sofa",
-    description:
-      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
-  image: "/storage/images/banner/TemplateB.png",
-    number: "02"
-  },
-  {
-    id: 3,
-    title: "Wood & Cloth Sofa",
-    description:
-      "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
-  image: "/storage/images/banner/banner_img.png",
-    number: "03"
-  },
-];
-
-const Banner = () => {
+const Banner = ({ featuredProducts }) => {
   const [current, setCurrent] = useState(0);
+  
+  // Créer les slides à partir des produits featured
+  const slides = featuredProducts && featuredProducts.length >= 3 ? featuredProducts.slice(0, 3).map((product, index) => ({
+    id: product.id,
+    productId: product.id,
+    title: product.name,
+    description: product.description || "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
+    image: product.picture_main,
+    number: `0${index + 1}`
+  })) : [
+    {
+      id: 1,
+      productId: null,
+      title: "Wood & Cloth Sofa",
+      description: "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
+      image: "/storage/images/banner/banner_img.png",
+      number: "01"
+    },
+    {
+      id: 2,
+      productId: null,
+      title: "Cloth & Wood Sofa",
+      description: "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
+      image: "/storage/images/banner/TemplateB.png",
+      number: "02"
+    },
+    {
+      id: 3,
+      productId: null,
+      title: "Wood & Cloth Sofa",
+      description: "Incididunt ut labore et dolore magna aliqua quis ipsum suspendisse ultrices gravida. Risus commodo viverra",
+      image: "/storage/images/banner/banner_img.png",
+      number: "03"
+    },
+  ];
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
+  
+  const handleBuyNow = (productId) => {
+    if (productId) {
+      router.post('/cart/add', { 
+        product_id: productId, 
+        quantity: 1 
+      }, {
+        preserveScroll: true,
+      });
+    } else {
+      // Si pas de productId (slides par défaut), rediriger vers la page produits
+      router.visit('/products');
+    }
+  };
 
   return (
     <section className="banner_part bg-[#EAF6FA]">
@@ -60,7 +83,10 @@ const Banner = () => {
                   <p className="text-gray-600 text-lg max-w-lg font-light leading-relaxed mb-8 relative z-20">
                     {slide.description}
                   </p>
-                  <button className="bg-[#FF3368] text-white px-12 py-4 rounded hover:bg-[#ff1f5a] transition-colors duration-300 uppercase text-sm tracking-wide font-medium relative z-20">
+                  <button 
+                    onClick={() => handleBuyNow(slide.productId)}
+                    className="bg-[#FF3368] text-white px-12 py-4 rounded hover:bg-[#ff1f5a] transition-colors duration-300 uppercase text-sm tracking-wide font-medium relative z-20"
+                  >
                     Buy Now
                   </button>
                 </div>
