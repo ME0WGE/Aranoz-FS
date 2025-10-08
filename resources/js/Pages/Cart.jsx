@@ -1,6 +1,6 @@
 import React from "react";
 import { router, Link, usePage } from "@inertiajs/react";
-import Nav from '@/Components/Nav';
+import Header from '@/Components/Header';
 import Footer from '@/Components/Footer';
 
 export default function Cart({ cartItems, cartCount }) {
@@ -15,7 +15,7 @@ export default function Cart({ cartItems, cartCount }) {
 
   return (
     <>
-      <Nav auth={props.auth} cartCount={cartCount ?? props.cartCount} />
+      <Header auth={props.auth} cartCount={cartCount ?? props.cartCount} />
       <div className="max-w-3xl mx-auto py-10">
         <h1 className="text-3xl font-bold mb-6">Mon Panier</h1>
         {cartItems.length === 0 ? (
