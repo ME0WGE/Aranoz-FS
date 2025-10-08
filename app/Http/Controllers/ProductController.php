@@ -15,16 +15,99 @@ class ProductController extends Controller
             'products' => $products,
         ]);
     }
-    public function index() {
-        $products = Product::all();
-        $categories = \App\Models\ProductCategory::all();
+    public function index(Request $request) {
+        $query = Product::with(['category', 'color', 'discount']);
+        
+        // Filter by category
+        if ($request->has('category') && $request->category) {
+            $query->where('product_category_id', $request->category);
+        }
+        
+        // Filter by color
+        if ($request->has('color') && $request->color) {
+            $query->where('color_id', $request->color);
+        }
+        
+        // Filter by price range
+        if ($request->has('min_price')) {
+            $query->where('price', '>=', $request->min_price * 100); // Convert to cents
+        }
+        
+        if ($request->has('max_price')) {
+            $query->where('price', '<=', $request->max_price * 100); // Convert to cents
+        }
+        
+        // Search by name
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        // Sort by
+        if ($request->has('sort_by')) {
+            switch ($request->sort_by) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+        
+        // Pagination
+        $perPage = $request->has('per_page') ? $request->per_page : 9;
+        $products = $query->paginate($perPage)->withQueryString();
+        
+        // Get categories with product count
+        $categories = \App\Models\ProductCategory::withCount('products')->get();
+        
+        // Get colors with product count
+        $colors = \App\Models\Color::withCount('products')->get();
+        
+        // Get best sellers
+        $bestSellers = Product::with('category')
+            ->withCount('likedBy')
+            ->orderBy('liked_by_count', 'desc')
+            ->limit(4)
+            ->get();
+        
+        // Get price range
+        $minPrice = floor(Product::min('price') / 100); // Convert from cents
+        $maxPrice = ceil(Product::max('price') / 100); // Convert from cents
+        
         $cartCount = 0;
         if (\Illuminate\Support\Facades\Auth::check()) {
             $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->sum('quantity');
         }
+        
         return Inertia::render('Category', [
             'products' => $products,
             'categories' => $categories,
+            'colors' => $colors,
+            'bestSellers' => $bestSellers,
+            'filters' => [
+                'category' => $request->category,
+                'color' => $request->color,
+                'min_price' => $request->min_price ?? $minPrice,
+                'max_price' => $request->max_price ?? $maxPrice,
+                'search' => $request->search,
+                'sort_by' => $request->sort_by,
+                'per_page' => $perPage,
+            ],
+            'priceRange' => [
+                'min' => $minPrice,
+                'max' => $maxPrice,
+            ],
             'cartCount' => $cartCount,
         ]);
     }
