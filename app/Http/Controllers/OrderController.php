@@ -115,10 +115,13 @@ class OrderController extends Controller
             ->orderByDesc('created_at')
             ->limit(5)
             ->get(['id', 'order_number', 'status', 'total_price', 'created_at']);
+        
+        $cartCount = \App\Models\Cart::where('user_id', $user->id)->sum('quantity');
             
         return Inertia::render('Track', [
             'order' => null,
             'recentOrders' => $recentOrders,
+            'cartCount' => $cartCount,
             'auth' => [
                 'user' => $user
             ]
@@ -148,10 +151,13 @@ class OrderController extends Controller
             ->orderByDesc('created_at')
             ->limit(5)
             ->get(['id', 'order_number', 'status', 'total_price', 'created_at']);
+        
+        $cartCount = \App\Models\Cart::where('user_id', $user->id)->sum('quantity');
 
         return Inertia::render('Track', [
             'order' => $order,
             'recentOrders' => $recentOrders,
+            'cartCount' => $cartCount,
             'auth' => [
                 'user' => $user
             ]

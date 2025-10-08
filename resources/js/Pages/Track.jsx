@@ -1,7 +1,8 @@
 import { Head, useForm, Link } from '@inertiajs/react';
 import { useState } from 'react';
+import AppLayout from '@/Layouts/AppLayout';
 
-export default function Track({ order, errors, auth, recentOrders }) {
+export default function Track({ order, errors, auth, recentOrders, cartCount }) {
     const [searchPerformed, setSearchPerformed] = useState(!!order);
     
     const { data, setData, post, processing } = useForm({
@@ -48,7 +49,7 @@ export default function Track({ order, errors, auth, recentOrders }) {
     };
 
     return (
-        <>
+        <AppLayout cartCount={cartCount}>
             <Head title="Suivi de commande" />
             
             <div className="min-h-screen bg-gray-50 py-8">
@@ -348,6 +349,6 @@ export default function Track({ order, errors, auth, recentOrders }) {
                     )}
                 </div>
             </div>
-        </>
+        </AppLayout>
     );
 }
