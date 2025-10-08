@@ -65,17 +65,32 @@ class OrderController extends Controller
     }
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->orderByDesc('created_at')->get();
+        $user = Auth::user();
+        $orders = Order::with(['items.product'])
+            ->where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
+        
+        $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+        
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
+            'cartCount' => $cartCount,
         ]);
     }
 
     public function show($id)
     {
-        $order = Order::with('items')->where('user_id', Auth::id())->findOrFail($id);
+        $user = Auth::user();
+        $order = Order::with(['items.product', 'user'])
+            ->where('user_id', $user->id)
+            ->findOrFail($id);
+        
+        $cartCount = Cart::where('user_id', $user->id)->sum('quantity');
+        
         return Inertia::render('Orders/Show', [
             'order' => $order,
+            'cartCount' => $cartCount,
         ]);
     }
 
