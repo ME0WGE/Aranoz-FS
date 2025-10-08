@@ -19,7 +19,7 @@ const FeaturedCategory = ({ categories }) => (
                             <img
                                 src={`/storage/images/feature/large/${category.image.split('/').pop()}`}
                                 alt={category.name}
-                                className="max-h-[180px] object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
+                                className="max-h-[180px] object-contain transition-transform duration-300"
                             />
                         </div>
                     </div>
