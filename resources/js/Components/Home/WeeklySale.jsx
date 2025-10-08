@@ -39,7 +39,7 @@ const WeeklySale = ({ saleProduct }) => {
                     <div className="relative">
                         <div className="relative aspect-square rounded-lg overflow-hidden bg-[#E8F6FF]">
                             <img
-                                src={`/storage/images/product/${saleProduct?.picture_main}`}
+                                src={saleProduct?.picture_main}
                                 alt={saleProduct?.name}
                                 className="w-4/5 h-4/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
                             />

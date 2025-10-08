@@ -35,7 +35,7 @@ export default function Cart({ cartItems, cartCount }) {
                 {cartItems.map((item) => (
                   <tr key={item.id} className="border-b">
                     <td className="py-2 flex items-center gap-2">
-                      <img src={item.product.image} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                      <img src={item.product.picture_main} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
                       <span>{item.product.name}</span>
                       <Link
                         href={`/products/${item.product.id}`}
@@ -45,7 +45,7 @@ export default function Cart({ cartItems, cartCount }) {
                       </Link>
                     </td>
                     <td className="py-2">{item.quantity}</td>
-                    <td className="py-2">{item.product.price} €</td>
+                    <td className="py-2">{(item.product.price / 100).toFixed(2)} €</td>
                     <td className="py-2">
                       <button
                         className="bg-red-500 text-white px-3 py-1 rounded"
