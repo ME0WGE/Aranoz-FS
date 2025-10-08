@@ -17,7 +17,7 @@ const FeaturedCategory = ({ categories }) => (
                         </div>
                         <div className="flex justify-center items-end flex-1">
                             <img
-                                src={`/storage/images/feature/large/${category.image.split('/').pop()}`}
+                                src={`/storage/${category.image}`}
                                 alt={category.name}
                                 className="max-h-[180px] object-contain transition-transform duration-300"
                             />

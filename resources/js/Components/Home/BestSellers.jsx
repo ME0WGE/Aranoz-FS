@@ -9,7 +9,7 @@ const BestSellers = ({ products }) => {
             id: 1,
             name: "Quartz Belt Watch",
             price: "$150.00",
-            image: "product_1.png",
+            image: "/storage/images/product/product_1.png",
             rating: 5,
             color: "bg-white"
         },
@@ -17,7 +17,7 @@ const BestSellers = ({ products }) => {
             id: 2,
             name: "Quartz Belt Watch",
             price: "$150.00",
-            image: "product_2.png",
+            image: "/storage/images/product/product_2.png",
             rating: 4,
             color: "bg-[#F0F8F0]"
         },
@@ -25,7 +25,7 @@ const BestSellers = ({ products }) => {
             id: 3,
             name: "Quartz Belt Watch",
             price: "$150.00",
-            image: "product_3.png",
+            image: "/storage/images/product/product_3.png",
             rating: 5,
             color: "bg-[#EEF1FF]"
         },
@@ -33,7 +33,7 @@ const BestSellers = ({ products }) => {
             id: 4,
             name: "Quartz Belt Watch",
             price: "$150.00",
-            image: "product_4.png",
+            image: "/storage/images/product/product_4.png",
             rating: 4,
             color: "bg-[#FFF3EA]"
         }
@@ -104,7 +104,7 @@ const BestSellers = ({ products }) => {
                                     <div className="group">
                                         <div className={`relative aspect-square rounded-lg overflow-hidden ${product.color}`}>
                                             <img
-                                                src={`/storage/images/product/${product.image}`}
+                                                src={product.image}
                                                 alt={product.name}
                                                 className="w-4/5 h-4/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain transition-transform duration-500 group-hover:scale-110"
                                             />
