@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
@@ -24,12 +23,14 @@ export default function Index({ contacts }) {
         <AppLayout>
             <Head title="Contact" />
             {/* Banner */}
-            <section className="flex items-center justify-between max-w-6xl mx-auto px-4 py-12">
+            <section className="bg-[#EAF6FA] pt-16 pb-8 mb-5">
+                <div className="flex items-center justify-between max-w-6xl mx-auto px-4">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">Contact Us</h1>
                     <p className="text-gray-500">Home <span className="mx-1">-</span> contact us</p>
                 </div>
                 <img src="/storage/images/banner/banner_img.png" alt="Contact Chair" className="w-48 h-48 object-contain" />
+                </div>
             </section>
 
             {/* Google Maps Iframe */}
