@@ -79,28 +79,74 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Recent Orders</h2>
-          <ul>
-            {recentOrders.map(order => (
-              <li key={order.id} className="mb-2 flex justify-between items-center bg-gray-50 p-2 rounded">
-                <span>Order #{order.id} - {order.status}</span>
-                <Link href={`/admin/orders/${order.id}`} className="text-pink-600 hover:underline">Details</Link>
-              </li>
-            ))}
-          </ul>
+        {/* Recent Orders */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Recent Orders</h2>
+            {(userRole === 'admin' || userRole === 'agent') && (
+              <Link href={route('admin.orders.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                View All →
+              </Link>
+            )}
+          </div>
+          <div className="space-y-3">
+            {recentOrders && recentOrders.length > 0 ? recentOrders.map(order => (
+              <div key={order.id} className="flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 rounded-full ${
+                    order.status === 'pending' ? 'bg-yellow-500' :
+                    order.status === 'confirmed' ? 'bg-blue-500' :
+                    order.status === 'sent' ? 'bg-green-500' :
+                    order.status === 'delivered' ? 'bg-purple-500' :
+                    'bg-red-500'
+                  }`}></div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Order #{order.id}</p>
+                    <p className="text-xs text-gray-600 capitalize">{order.status}</p>
+                  </div>
+                </div>
+                <Link 
+                  href={`/admin/orders/${order.id}`} 
+                  className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium"
+                >
+                  Details
+                </Link>
+              </div>
+            )) : (
+              <p className="text-gray-500 text-center py-8">No recent orders</p>
+            )}
+          </div>
         </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Top Products (Likes)</h2>
-          <ul>
-            {topProducts.map(product => (
-              <li key={product.id} className="mb-2 flex justify-between items-center bg-gray-50 p-2 rounded">
-                <span>{product.name}</span>
-                <span className="text-blue-600 font-bold">{product.likes} likes</span>
-                <Link href={`/admin/products/${product.id}`} className="text-pink-600 hover:underline">Manage</Link>
-              </li>
-            ))}
-          </ul>
+
+        {/* Top Products */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Top Products</h2>
+            {(userRole === 'admin' || userRole === 'webmaster') && (
+              <Link href={route('admin.products.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                View All →
+              </Link>
+            )}
+          </div>
+          <div className="space-y-3">
+            {topProducts && topProducts.length > 0 ? topProducts.map((product, index) => (
+              <div key={product.id} className="flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">{product.name}</p>
+                    <p className="text-xs text-gray-600">
+                      <span className="text-pink-600 font-semibold">{product.likes}</span> likes
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )) : (
+              <p className="text-gray-500 text-center py-8">No products yet</p>
+            )}
+          </div>
         </div>
       </div>
       {/* Quick Actions - Role Based */}
@@ -229,18 +275,38 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
           </Link>
         </div>
       </div>
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Recent Users</h2>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {recentUsers.map(user => (
-            <li key={user.id} className="bg-white shadow rounded p-4 flex flex-col items-center">
-              <span className="font-bold">{user.name}</span>
-              <span className="text-gray-500 text-sm">{user.email}</span>
-              <Link href={`/admin/users/${user.id}`} className="mt-2 text-blue-600 hover:underline">Profile</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Recent Users - Admin Only */}
+      {userRole === 'admin' && recentUsers && recentUsers.length > 0 && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900">Recent Users</h2>
+            <Link href={route('admin.users.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+              View All →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {recentUsers.map(user => (
+              <div key={user.id} className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-gray-900 truncate">{user.name}</p>
+                    <p className="text-xs text-gray-600 truncate">{user.email}</p>
+                  </div>
+                </div>
+                <Link 
+                  href={`/admin/users/${user.id}`} 
+                  className="block w-full text-center px-3 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium border border-blue-200"
+                >
+                  View Profile
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
