@@ -82,7 +82,7 @@ class AdminController extends Controller
 
     public function showUser($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with(['role', 'avatar'])->findOrFail($id);
         return Inertia::render('Admin/UserShow', [
             'user' => $user,
         ]);
