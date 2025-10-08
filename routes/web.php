@@ -134,19 +134,25 @@ Route::middleware(['auth', 'verified', 'role:webmaster,admin'])->group(function 
 
     // Product Categories
     Route::get('/admin/categories', [ProductCategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/admin/categories/create', [ProductCategoryController::class, 'create'])->name('admin.categories.create');
     Route::post('/admin/categories', [ProductCategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('/admin/categories/{id}/edit', [ProductCategoryController::class, 'edit'])->name('admin.categories.edit');
     Route::patch('/admin/categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{id}', [ProductCategoryController::class, 'destroy'])->name('admin.categories.destroy');
 
     // Discounts Management
     Route::get('/admin/discounts', [DiscountController::class, 'index'])->name('admin.discounts.index');
+    Route::get('/admin/discounts/create', [DiscountController::class, 'create'])->name('admin.discounts.create');
     Route::post('/admin/discounts', [DiscountController::class, 'store'])->name('admin.discounts.store');
+    Route::get('/admin/discounts/{id}/edit', [DiscountController::class, 'edit'])->name('admin.discounts.edit');
     Route::patch('/admin/discounts/{id}', [DiscountController::class, 'update'])->name('admin.discounts.update');
     Route::delete('/admin/discounts/{id}', [DiscountController::class, 'destroy'])->name('admin.discounts.destroy');
 
     // Coupons Management
     Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
     Route::post('/admin/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
+    Route::get('/admin/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
     Route::patch('/admin/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
     Route::delete('/admin/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy');
 });
@@ -210,42 +216,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::patch('/admin/orders/{id}', [OrderController::class, 'adminUpdate'])->name('admin.orders.update');
     Route::delete('/admin/orders/{id}', [OrderController::class, 'adminDestroy'])->name('admin.orders.destroy');
 
-    // Products
-    Route::get('/admin/products/{id}', [ProductController::class, 'adminShow'])->name('admin.products.show');
-    Route::get('/admin/products/{id}/edit', [ProductController::class, 'adminEdit'])->name('admin.products.edit');
-    Route::patch('/admin/products/{id}', [ProductController::class, 'adminUpdate'])->name('admin.products.update');
-    Route::delete('/admin/products/{id}', [ProductController::class, 'adminDestroy'])->name('admin.products.destroy');
-    Route::get('/admin/products/create', [ProductController::class, 'adminCreate'])->name('admin.products.create');
-    Route::post('/admin/products', [ProductController::class, 'adminStore'])->name('admin.products.store');
+    // Products - Show only (create/edit are in webmaster group)
+    Route::get('/admin/products/{id}', [ProductController::class, 'show'])->name('admin.products.show');
 
-    // Coupons
-    Route::get('/admin/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
-    Route::patch('/admin/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
-    Route::delete('/admin/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy');
-    Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
-    Route::post('/admin/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
+    // Coupons - Already defined in webmaster group
 
-    // Blog
-    Route::get('/admin/blog/{id}', [BlogController::class, 'adminShow'])->name('admin.blog.show');
-    Route::get('/admin/blog/{id}/edit', [BlogController::class, 'adminEdit'])->name('admin.blog.edit');
-    Route::patch('/admin/blog/{id}', [BlogController::class, 'adminUpdate'])->name('admin.blog.update');
-    Route::delete('/admin/blog/{id}', [BlogController::class, 'adminDestroy'])->name('admin.blog.destroy');
-    Route::get('/admin/blog/create', [BlogController::class, 'adminCreate'])->name('admin.blog.create');
-    Route::post('/admin/blog', [BlogController::class, 'adminStore'])->name('admin.blog.store');
+    // Blog - Show only (create/edit are in community-manager group)
+    Route::get('/admin/blog/{id}', [BlogController::class, 'show'])->name('admin.blog.show');
 
-    // Categories
-    Route::get('/admin/categories/{id}/edit', [ProductCategoryController::class, 'edit'])->name('admin.categories.edit');
-    Route::patch('/admin/categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.categories.update');
-    Route::delete('/admin/categories/{id}', [ProductCategoryController::class, 'destroy'])->name('admin.categories.destroy');
-    Route::get('/admin/categories/create', [ProductCategoryController::class, 'create'])->name('admin.categories.create');
-    Route::post('/admin/categories', [ProductCategoryController::class, 'store'])->name('admin.categories.store');
-
-    // Discounts
-    Route::get('/admin/discounts/{id}/edit', [DiscountController::class, 'edit'])->name('admin.discounts.edit');
-    Route::patch('/admin/discounts/{id}', [DiscountController::class, 'update'])->name('admin.discounts.update');
-    Route::delete('/admin/discounts/{id}', [DiscountController::class, 'destroy'])->name('admin.discounts.destroy');
-    Route::get('/admin/discounts/create', [DiscountController::class, 'create'])->name('admin.discounts.create');
-    Route::post('/admin/discounts', [DiscountController::class, 'store'])->name('admin.discounts.store');
+    // Categories - Already defined in webmaster group
+    
+    // Discounts - Already defined in webmaster group
 });
 
 // Route /admin/dashboard retirée (doublon)
