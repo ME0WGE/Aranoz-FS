@@ -60,63 +60,61 @@ function AdminCoupons({ coupons }) {
         </div>
       </div>
 
-      {/* Coupons Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCoupons.map(coupon => (
-          <div key={coupon.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
-            {/* Coupon Card Header */}
-            <div className={`p-6 ${isValid(coupon.expires_at) ? 'bg-yellow-400' : 'bg-gray-400'}`}>
-              <div className="flex items-center justify-between mb-2">
-                <div className="bg-white bg-opacity-30 backdrop-blur-sm rounded-lg px-3 py-1">
-                  <p className="text-xs font-semibold text-white">DISCOUNT CODE</p>
-                </div>
-                {isValid(coupon.expires_at) ? (
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
-              </div>
-              <h3 className="text-3xl font-bold text-white font-mono tracking-wider mb-2">{coupon.code}</h3>
-              <p className="text-2xl font-bold text-white">{coupon.percentage}% OFF</p>
-            </div>
-
-            {/* Coupon Details */}
-            <div className="p-6">
-              {coupon.expires_at && (
-                <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Expires:</span> {new Date(coupon.expires_at).toLocaleString('fr-FR')}
-                  </p>
-                  {isExpired(coupon.expires_at) && (
-                    <p className="text-xs text-red-600 font-semibold mt-1">⚠️ Expired</p>
+      {/* Coupons List */}
+      <div className="bg-white rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réduction</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiration</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredCoupons.map(coupon => (
+              <tr key={coupon.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-mono font-bold text-gray-900">{coupon.code}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{coupon.percentage}%</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">
+                    {coupon.expires_at ? new Date(coupon.expires_at).toLocaleDateString('fr-FR') : 'Aucune'}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {isValid(coupon.expires_at) ? (
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      Actif
+                    </span>
+                  ) : (
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                      Expiré
+                    </span>
                   )}
-                </div>
-              )}
-
-              {/* Actions */}
-              <div className="flex gap-2">
-                <Link
-                  href={route('admin.coupons.edit', coupon.id)}
-                  className="flex-1 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium text-center"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(coupon.id, coupon.code)}
-                  className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <Link
+                    href={route('admin.coupons.edit', coupon.id)}
+                    className="text-blue-600 hover:text-blue-900 mr-4"
+                  >
+                    Modifier
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(coupon.id, coupon.code)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Empty State */}

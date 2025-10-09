@@ -212,9 +212,9 @@ class BlogController extends Controller
     // Blog Tags Management
     public function tagsIndex()
     {
-        $tags = \App\Models\Tag::withCount('blogs')->get();
+        $tags = \App\Models\Tag::withCount('blogs as posts_count')->get();
         
-        return Inertia::render('Admin/BlogTags', [
+        return Inertia::render('Admin/Tags', [
             'tags' => $tags,
         ]);
     }

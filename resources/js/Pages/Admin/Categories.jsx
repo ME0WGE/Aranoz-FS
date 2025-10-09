@@ -47,50 +47,45 @@ function AdminCategories({ categories }) {
         </div>
       </div>
 
-      {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCategories.map(category => (
-          <div key={category.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
-            {/* Category Image */}
-            {category.image && (
-              <div className="h-40 bg-gray-100 overflow-hidden">
-                <img 
-                  src={`/storage/${category.image}`} 
-                  alt={category.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
-            
-            {/* Category Info */}
-            <div className="p-6">
-              <div className="mb-4">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
-                <p className="text-sm text-gray-600">
-                  {category.products_count || 0} product{category.products_count !== 1 ? 's' : ''}
-                </p>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-2">
-                <Link
-                  href={route('admin.categories.edit', category.id)}
-                  className="flex-1 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium text-center"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(category.id, category.name)}
-                  className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
-                  disabled={category.products_count > 0}
-                  title={category.products_count > 0 ? 'Cannot delete category with products' : 'Delete category'}
-                >
-                  <FaTrash className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      {/* Categories List */}
+      <div className="bg-white rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produits</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredCategories.map(category => (
+              <tr key={category.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">{category.name}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">{category.products_count || 0}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <Link
+                    href={route('admin.categories.edit', category.id)}
+                    className="text-blue-600 hover:text-blue-900 mr-4"
+                  >
+                    Modifier
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(category.id, category.name)}
+                    className="text-red-600 hover:text-red-900"
+                    disabled={category.products_count > 0}
+                    title={category.products_count > 0 ? 'Impossible de supprimer une catégorie avec des produits' : ''}
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Empty State */}

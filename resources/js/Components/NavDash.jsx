@@ -108,7 +108,6 @@ export default function NavDash({ auth }) {
                                 <Dropdown.Content>
                                     {user ? (
                                         <>
-                                            <Dropdown.Link href="/orders">Mes commandes</Dropdown.Link>
                                             <Dropdown.Link href="/logout" method="post" as="button">
                                                 Se déconnecter
                                             </Dropdown.Link>
