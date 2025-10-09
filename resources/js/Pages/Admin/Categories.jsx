@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
+import { FaPlus, FaSearch, FaEdit, FaTrash, FaTags } from 'react-icons/fa';
 
 function AdminCategories({ categories }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -25,11 +26,9 @@ function AdminCategories({ categories }) {
         </div>
         <Link 
           href={route('admin.categories.create')}
-          className="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg hover:from-teal-600 hover:to-cyan-600 transition-all shadow-md hover:shadow-lg font-medium"
+          className="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors shadow-md hover:shadow-lg font-medium"
         >
-          <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
+          <FaPlus className="w-5 h-5 mr-2" />
           New Category
         </Link>
       </div>
@@ -44,9 +43,7 @@ function AdminCategories({ categories }) {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
-          <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <FaSearch className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
         </div>
       </div>
 
@@ -88,9 +85,7 @@ function AdminCategories({ categories }) {
                   disabled={category.products_count > 0}
                   title={category.products_count > 0 ? 'Cannot delete category with products' : 'Delete category'}
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
+                  <FaTrash className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -102,9 +97,7 @@ function AdminCategories({ categories }) {
       {filteredCategories.length === 0 && (
         <div className="bg-white rounded-lg shadow-md p-12 text-center">
           <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-            </svg>
+            <FaTags className="w-12 h-12 text-gray-400" />
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">No categories found</h3>
           <p className="text-gray-600 mb-6">
@@ -113,11 +106,9 @@ function AdminCategories({ categories }) {
           {!searchTerm && (
             <Link
               href={route('admin.categories.create')}
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg hover:from-teal-600 hover:to-cyan-600 transition-all font-medium"
+              className="inline-flex items-center px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
+              <FaPlus className="w-5 h-5 mr-2" />
               Create Your First Category
             </Link>
           )}

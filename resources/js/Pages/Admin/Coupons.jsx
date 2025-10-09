@@ -35,7 +35,7 @@ function AdminCoupons({ coupons }) {
         </div>
         <Link 
           href={route('admin.coupons.create')}
-          className="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg font-medium"
+          className="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors shadow-md hover:shadow-lg font-medium"
         >
           <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -65,7 +65,7 @@ function AdminCoupons({ coupons }) {
         {filteredCoupons.map(coupon => (
           <div key={coupon.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
             {/* Coupon Card Header */}
-            <div className={`p-6 ${isValid(coupon.expires_at) ? 'bg-gradient-to-r from-yellow-400 to-orange-400' : 'bg-gray-400'}`}>
+            <div className={`p-6 ${isValid(coupon.expires_at) ? 'bg-yellow-400' : 'bg-gray-400'}`}>
               <div className="flex items-center justify-between mb-2">
                 <div className="bg-white bg-opacity-30 backdrop-blur-sm rounded-lg px-3 py-1">
                   <p className="text-xs font-semibold text-white">DISCOUNT CODE</p>
@@ -134,7 +134,7 @@ function AdminCoupons({ coupons }) {
           {!searchTerm && (
             <Link
               href={route('admin.coupons.create')}
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all font-medium"
+              className="inline-flex items-center px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-medium"
             >
               <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

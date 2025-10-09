@@ -20,19 +20,19 @@ export default function Reports({ salesReport, customerReport, productReport, or
                             Sales Report
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
+                            <div className="bg-green-50 rounded-lg p-6 border border-green-200">
                                 <p className="text-sm text-green-800 font-medium mb-2">Today</p>
                                 <p className="text-3xl font-bold text-green-600">€{salesReport.today.toFixed(2)}</p>
                             </div>
-                            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
+                            <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
                                 <p className="text-sm text-blue-800 font-medium mb-2">This Week</p>
                                 <p className="text-3xl font-bold text-blue-600">€{salesReport.thisWeek.toFixed(2)}</p>
                             </div>
-                            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
+                            <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
                                 <p className="text-sm text-purple-800 font-medium mb-2">This Month</p>
                                 <p className="text-3xl font-bold text-purple-600">€{salesReport.thisMonth.toFixed(2)}</p>
                             </div>
-                            <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg p-6 border border-pink-200">
+                            <div className="bg-pink-50 rounded-lg p-6 border border-pink-200">
                                 <p className="text-sm text-pink-800 font-medium mb-2">This Year</p>
                                 <p className="text-3xl font-bold text-pink-600">€{salesReport.thisYear.toFixed(2)}</p>
                             </div>

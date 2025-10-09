@@ -106,7 +106,7 @@ export default function Analytics({ stats, monthlySales, topProducts, categorySa
                                     <span className="text-sm text-gray-600 w-24">{month.month}</span>
                                     <div className="flex-1 bg-gray-200 rounded-full h-8 overflow-hidden">
                                         <div 
-                                            className="bg-gradient-to-r from-pink-500 to-orange-500 h-full flex items-center justify-end pr-2"
+                                            className="bg-pink-500 h-full flex items-center justify-end pr-2"
                                             style={{ 
                                                 width: `${Math.min((month.sales / Math.max(...monthlySales.map(m => m.sales))) * 100, 100)}%` 
                                             }}
