@@ -42,15 +42,6 @@ export default function Blog({ posts, categories, recentPosts, tags, instagramFe
                                 </article>
                             ))}
                         </div>
-                        {/* Pagination */}
-                        <div className="flex justify-center mt-12">
-                            <nav className="inline-flex gap-2 text-gray-700">
-                                <a href="#" className="px-3 py-1 border rounded hover:bg-pink-100">&lt;</a>
-                                <a href="#" className="px-3 py-1 border rounded hover:bg-pink-100">1</a>
-                                <a href="#" className="px-3 py-1 border rounded hover:bg-pink-100">2</a>
-                                <a href="#" className="px-3 py-1 border rounded hover:bg-pink-100">&gt;</a>
-                            </nav>
-                        </div>
                     </div>
 
                     {/* Sidebar */}
@@ -93,15 +84,6 @@ export default function Blog({ posts, categories, recentPosts, tags, instagramFe
                             <div className="flex flex-wrap gap-2">
                                 {tags && tags.map(tag => (
                                     <span key={tag} className="px-3 py-1 bg-gray-100 rounded text-gray-600 text-sm hover:bg-pink-100 cursor-pointer">{tag}</span>
-                                ))}
-                            </div>
-                        </div>
-                        {/* Instagram Feeds */}
-                        <div className="bg-white rounded shadow-sm p-6 mb-4">
-                            <h4 className="font-bold text-lg mb-4">Instagram Feeds</h4>
-                            <div className="grid grid-cols-3 gap-2">
-                                {instagramFeeds && instagramFeeds.map((img, idx) => (
-                                    <img key={idx} src={img} alt="Instagram" className="w-full h-16 object-cover rounded" />
                                 ))}
                             </div>
                         </div>
