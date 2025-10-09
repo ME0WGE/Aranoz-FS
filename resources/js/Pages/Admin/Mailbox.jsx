@@ -4,12 +4,19 @@ import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function Mailbox({ messages }) {
     const [selectedMessage, setSelectedMessage] = useState(null);
+    const [filter, setFilter] = useState('all'); // 'all', 'unread', 'replied'
     const { data, setData, post, processing, errors, reset } = useForm({ response: '' });
 
     const handleSelect = (msg) => {
         setSelectedMessage(msg);
         reset();
     };
+
+    const filteredMessages = messages.filter(msg => {
+        if (filter === 'unread') return msg.status === 'pending';
+        if (filter === 'replied') return msg.status === 'replied';
+        return true;
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,13 +37,48 @@ export default function Mailbox({ messages }) {
                 {/* Messages List */}
                 <div className="bg-white rounded-lg shadow">
                     <div className="p-4 border-b border-gray-200">
-                        <h2 className="text-lg font-semibold">Messages ({messages.length})</h2>
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-lg font-semibold">Messages ({filteredMessages.length})</h2>
+                        </div>
+                        {/* Filter Buttons */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setFilter('all')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                                    filter === 'all' 
+                                        ? 'bg-blue-600 text-white' 
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                            >
+                                Tous ({messages.length})
+                            </button>
+                            <button
+                                onClick={() => setFilter('unread')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                                    filter === 'unread' 
+                                        ? 'bg-yellow-500 text-white' 
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                            >
+                                Non lus ({messages.filter(m => m.status === 'pending').length})
+                            </button>
+                            <button
+                                onClick={() => setFilter('replied')}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                                    filter === 'replied' 
+                                        ? 'bg-green-600 text-white' 
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                            >
+                                Répondus ({messages.filter(m => m.status === 'replied').length})
+                            </button>
+                        </div>
                     </div>
                     <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-                        {messages.length === 0 ? (
+                        {filteredMessages.length === 0 ? (
                             <div className="p-8 text-center text-gray-500">Aucun message</div>
                         ) : (
-                            messages.map(msg => (
+                            filteredMessages.map(msg => (
                                 <div
                                     key={msg.id}
                                     onClick={() => handleSelect(msg)}
