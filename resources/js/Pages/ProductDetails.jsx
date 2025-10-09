@@ -75,64 +75,6 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                 </div>
             </section>
 
-            {/* Tabs: Description, Specification, Comments, Reviews */}
-            <section className="max-w-6xl mx-auto px-4 pb-16">
-                <div className="flex gap-4 border-b mb-8">
-                    <button className="px-6 py-2 font-bold text-gray-700 border-b-2 border-pink-500">Reviews</button>
-                    <button className="px-6 py-2 font-bold text-gray-500">Description</button>
-                    <button className="px-6 py-2 font-bold text-gray-500">Specification</button>
-                    <button className="px-6 py-2 font-bold text-gray-500">Comments</button>
-                </div>
-                <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Left: Review Summary & List */}
-                    <div className="w-full lg:w-2/3">
-                        <div className="flex gap-8 mb-8">
-                            <div className="bg-white rounded shadow p-6 flex flex-col items-center w-1/2">
-                                <div className="text-4xl font-bold text-pink-500 mb-2">4.0</div>
-                                <div className="text-gray-500 mb-2">Overall</div>
-                                <div className="text-xs text-gray-400">(98 reviews)</div>
-                            </div>
-                            <div className="bg-white rounded shadow p-6 w-1/2">
-                                <div className="font-bold mb-2">Based on 3 Reviews</div>
-                                <div className="space-y-1">
-                                    <div className="flex items-center gap-2 text-sm"><span>5 Star</span><span className="text-yellow-400">★★★★★</span><span>(01)</span></div>
-                                    <div className="flex items-center gap-2 text-sm"><span>4 Star</span><span className="text-yellow-400">★★★★</span><span>(01)</span></div>
-                                    <div className="flex items-center gap-2 text-sm"><span>3 Star</span><span className="text-yellow-400">★★★</span><span>(01)</span></div>
-                                    <div className="flex items-center gap-2 text-sm"><span>2 Star</span><span className="text-yellow-400">★★</span><span>(01)</span></div>
-                                    <div className="flex items-center gap-2 text-sm"><span>1 Star</span><span className="text-yellow-400">★</span><span>(01)</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="space-y-8">
-                            {reviews.map((review, idx) => (
-                                <div key={idx} className="flex gap-4 items-start">
-                                    <img src={review.avatar} alt={review.name} className="w-14 h-14 rounded-full object-cover" />
-                                    <div>
-                                        <div className="font-bold text-gray-700">{review.name}</div>
-                                        <div className="text-yellow-400 text-sm mb-1">★★★★★</div>
-                                        <div className="text-gray-600 mb-2">{review.text}</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    {/* Right: Add Review Form */}
-                    <div className="w-full lg:w-1/3">
-                        <div className="bg-white rounded shadow p-6">
-                            <div className="font-bold mb-4">Add a Review</div>
-                            <div className="mb-2 text-sm">Your Rating <span className="text-yellow-400">★★★★★</span> Outstanding</div>
-                            <form className="space-y-4">
-                                <input type="text" placeholder="Your Full name" className="w-full border rounded px-4 py-2" />
-                                <input type="email" placeholder="Email address" className="w-full border rounded px-4 py-2" />
-                                <input type="text" placeholder="Phone number" className="w-full border rounded px-4 py-2" />
-                                <textarea placeholder="Review" className="w-full border rounded px-4 py-2" rows={3}></textarea>
-                                <button type="submit" className="w-full bg-pink-500 text-white py-2 rounded font-bold">SUBMIT NOW</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             {/* Best Sellers */}
             <section className="max-w-6xl mx-auto px-4 pb-16">
                 <div className="section_tittle text-center mb-8">

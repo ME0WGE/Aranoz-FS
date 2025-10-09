@@ -204,7 +204,7 @@ export default function Category({ categories, colors, products, bestSellers, fi
                         </div>
 
                         {/* Show per page */}
-                        <div className="single_product_menu flex items-center gap-2">
+                        {/* <div className="single_product_menu flex items-center gap-2">
                             <h5 className="font-medium text-gray-700">Show:</h5>
                             <div className="flex gap-1">
                                 {[9, 18, 27].map(num => (
@@ -221,7 +221,7 @@ export default function Category({ categories, colors, products, bestSellers, fi
                                     </button>
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Search */}
                         <div className="single_product_menu flex items-center gap-2">
