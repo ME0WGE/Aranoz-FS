@@ -53,9 +53,9 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                             <span>Next</span>
                         </div>
                         <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
-                        <div className="text-pink-500 text-2xl font-bold mb-2">${product.price}</div>
-                        <div className="mb-2 text-gray-500">Category: <span className="text-gray-700 font-medium">{product.category}</span></div>
-                        <div className="mb-2 text-gray-500">Availability: <span className="text-green-600 font-medium">{product.availability}</span></div>
+                        <div className="text-pink-500 text-2xl font-bold mb-2">€{product.price.toFixed(2)}</div>
+                        <div className="mb-2 text-gray-500">Catégorie: <span className="text-gray-700 font-medium">{product.category}</span></div>
+                        <div className="mb-2 text-gray-500">Disponibilité: <span className="text-green-600 font-medium">{product.availability}</span></div>
                         <p className="mb-6 text-gray-600">{product.description}</p>
                         <div className="flex items-center gap-2 mb-6">
                             <button className="px-4 py-2 border rounded" onClick={handleDecrease}>-</button>
@@ -86,7 +86,7 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                             <img src={item.image} alt={item.name} className="w-32 h-32 object-contain mb-4" />
                             <div className="text-center">
                                 <h4 className="font-bold text-lg mb-2">{item.name}</h4>
-                                <h3 className="text-gray-700 font-bold text-xl mb-2">${item.price}</h3>
+                                <h3 className="text-gray-700 font-bold text-xl mb-2">€{item.price.toFixed(2)}</h3>
                             </div>
                         </div>
                     ))}

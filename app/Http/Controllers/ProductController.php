@@ -114,15 +114,22 @@ class ProductController extends Controller
 
     public function show($id) {
         $product = Product::with('category')->findOrFail($id);
-        $thumbnails = [$product->image, $product->image, $product->image];
+        
+        $thumbnails = array_filter([
+            $product->picture_main,
+            $product->picture_rear,
+            $product->picture_left,
+            $product->picture_right,
+        ]);
+        
         $productData = [
             'id' => $product->id,
             'name' => $product->name,
-            'price' => $product->price,
-            'image' => $product->image,
-            'thumbnails' => $thumbnails,
+            'price' => ($product->price / 100), // Convert from cents to euros
+            'image' => $product->picture_main,
+            'thumbnails' => array_values($thumbnails),
             'category' => $product->category ? $product->category->name : '',
-            'availability' => $product->stock > 0 ? 'In stock' : 'Out of stock',
+            'availability' => $product->stock_quantity > 0 ? 'In stock' : 'Out of stock',
             'description' => $product->description,
         ];
 
@@ -147,8 +154,8 @@ class ProductController extends Controller
         $bestSellers = Product::orderBy('id', 'desc')->take(4)->get()->map(function($item) {
             return [
                 'name' => $item->name,
-                'price' => $item->price,
-                'image' => $item->image,
+                'price' => ($item->price / 100), // Convert from cents to euros
+                'image' => $item->picture_main,
             ];
         });
 
