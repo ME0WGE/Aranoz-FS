@@ -16,7 +16,7 @@ import {
   FaEnvelope
 } from 'react-icons/fa';
 
-export default function AdminDashboard({ stats, recentOrders, topProducts, recentUsers }) {
+export default function AdminDashboard({ stats }) {
   const { auth } = usePage().props;
   const userRole = auth?.user?.role?.name;
 
@@ -24,18 +24,6 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
     <div className="p-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <div className="flex gap-3">
-          {(userRole === 'admin' || userRole === 'webmaster') && (
-            <Link href={route('admin.products.create')} className="px-4 py-2 bg-[#FF3368] text-white rounded-lg hover:bg-[#ff1f5a] transition-colors font-medium">
-              + Add Product
-            </Link>
-          )}
-          {(userRole === 'admin' || userRole === 'community-manager') && (
-            <Link href={route('admin.blog.create')} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-              + Add Blog Post
-            </Link>
-          )}
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -84,77 +72,7 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        {/* Recent Orders */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Recent Orders</h2>
-            {(userRole === 'admin' || userRole === 'agent') && (
-              <Link href={route('admin.orders.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                View All →
-              </Link>
-            )}
-        </div>
-          <div className="space-y-3">
-            {recentOrders && recentOrders.length > 0 ? recentOrders.map(order => (
-              <div key={order.id} className="flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${
-                    order.status === 'pending' ? 'bg-yellow-500' :
-                    order.status === 'confirmed' ? 'bg-blue-500' :
-                    order.status === 'sent' ? 'bg-green-500' :
-                    order.status === 'delivered' ? 'bg-purple-500' :
-                    'bg-red-500'
-                  }`}></div>
-        <div>
-                    <p className="font-semibold text-gray-900">Order #{order.id}</p>
-                    <p className="text-xs text-gray-600 capitalize">{order.status}</p>
-        </div>
-      </div>
-                <Link 
-                  href={`/admin/orders/${order.id}`} 
-                  className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium"
-                >
-                  Details
-                </Link>
-              </div>
-            )) : (
-              <p className="text-gray-500 text-center py-8">No recent orders</p>
-            )}
-          </div>
-        </div>
 
-        {/* Top Products */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Top Products</h2>
-            {(userRole === 'admin' || userRole === 'webmaster') && (
-              <Link href={route('admin.products.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                View All →
-              </Link>
-            )}
-          </div>
-          <div className="space-y-3">
-            {topProducts && topProducts.length > 0 ? topProducts.map((product, index) => (
-              <div key={product.id} className="flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
-        </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">{product.name}</p>
-                    <p className="text-xs text-gray-600">
-                      <span className="text-pink-600 font-semibold">{product.likes}</span> likes
-                    </p>
-        </div>
-      </div>
-        </div>
-            )) : (
-              <p className="text-gray-500 text-center py-8">No products yet</p>
-            )}
-        </div>
-        </div>
-      </div>
       {/* Quick Actions - Role Based */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
@@ -263,38 +181,6 @@ export default function AdminDashboard({ stats, recentOrders, topProducts, recen
           </Link>
         </div>
       </div>
-      {/* Recent Users - Admin Only */}
-      {userRole === 'admin' && recentUsers && recentUsers.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Recent Users</h2>
-            <Link href={route('admin.users.index')} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-              View All →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {recentUsers.map(user => (
-              <div key={user.id} className="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-gray-900 truncate">{user.name}</p>
-                    <p className="text-xs text-gray-600 truncate">{user.email}</p>
-                  </div>
-                </div>
-                <Link 
-                  href={`/admin/users/${user.id}`} 
-                  className="block w-full text-center px-3 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium border border-blue-200"
-                >
-                  View Profile
-                </Link>
-              </div>
-            ))}
-          </div>
-      </div>
-      )}
     </div>
   );
 }
