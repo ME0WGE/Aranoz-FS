@@ -49,8 +49,7 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                     {/* Right: Product Info */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-start">
                         <div className="flex justify-between items-center mb-2 text-sm text-gray-500">
-                            <span>Previous</span>
-                            <span>Next</span>
+                            
                         </div>
                         <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
                         <div className="text-pink-500 text-2xl font-bold mb-2">€{product.price.toFixed(2)}</div>
@@ -69,14 +68,14 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                             >
                                 ADD TO CART
                             </button>
-                            <button className="bg-white border px-4 py-3 rounded shadow text-pink-500"><i className="ti-heart" /></button>
+                            
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Best Sellers */}
-            <section className="max-w-6xl mx-auto px-4 pb-16">
+            {/* <section className="max-w-6xl mx-auto px-4 pb-16">
                 <div className="section_tittle text-center mb-8">
                     <h2 className="text-3xl font-bold">Best Sellers <span className="text-pink-500">Shop</span></h2>
                 </div>
@@ -91,7 +90,7 @@ export default function ProductDetails({ product, reviews, bestSellers, cartCoun
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
         </AppLayout>
     );
 }

@@ -1,7 +1,40 @@
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { FaFacebookF, FaTwitter, FaGlobe, FaBehance, FaHeart } from 'react-icons/fa';
+import { useState } from 'react';
 
 export default function Footer() {
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState({ type: '', message: '' });
+
+    const handleNewsletterSubmit = (e) => {
+        e.preventDefault();
+
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+            setStatus({
+                type: 'error',
+                message: 'Veuillez entrer une adresse email valide'
+            });
+            return;
+        }
+
+        router.post('/newsletter', { email }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setStatus({
+                    type: 'success',
+                    message: 'Merci pour votre inscription !'
+                });
+                setEmail('');
+            },
+            onError: (errors) => {
+                setStatus({
+                    type: 'error',
+                    message: errors.email || 'Une erreur est survenue. Veuillez réessayer.'
+                });
+            }
+        });
+    };
+
     return (
         <footer className="bg-gray-50 text-gray-800">
             {/* Main Footer Content */}
@@ -176,28 +209,32 @@ export default function Footer() {
                         <div className="space-y-4">
                             <h4 className="text-lg font-semibold text-gray-900">Newsletter</h4>
                             <p className="text-gray-600 text-sm">
-                                Heaven fruitful doesn't over lesser in days. Appear creeping
+                                Inscrivez-vous pour recevoir nos dernières offres
                             </p>
-                            <form className="space-y-3">
+                            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                                 <div className="flex">
                                     <input
                                         type="email"
                                         name="email"
-                                        id="newsletter-form-email"
-                                        placeholder="Email address"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="Votre email"
                                         className="flex-1 px-3 py-2 text-sm text-gray-900 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#FF3368] focus:border-[#FF3368]"
-                                        onFocus={e => (e.target.placeholder = '')}
-                                        onBlur={e => (e.target.placeholder = 'Email address')}
                                     />
                                     <button
                                         type="submit"
-                                        name="submit"
-                                        id="newsletter-submit"
                                         className="bg-[#FF3368] hover:bg-[#ff1f5a] px-4 py-2 text-sm font-medium text-white rounded-r-md transition duration-300"
                                     >
                                         Subscribe
                                     </button>
                                 </div>
+                                {status.message && (
+                                    <p className={`text-xs ${
+                                        status.type === 'error' ? 'text-red-600' : 'text-green-600'
+                                    }`}>
+                                        {status.message}
+                                    </p>
+                                )}
                             </form>
                         </div>
                     </div>

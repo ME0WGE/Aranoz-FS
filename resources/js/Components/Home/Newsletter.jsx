@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
+import { router } from '@inertiajs/react';
 
 const Newsletter = ({ blogs }) => {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
             setStatus({
                 type: 'error',
-                message: 'Please enter a valid email address'
+                message: 'Veuillez entrer une adresse email valide'
             });
             return;
         }
 
-        try {
-            // TODO: Implement newsletter subscription
-            setStatus({
-                type: 'success',
-                message: 'Thank you for subscribing!'
-            });
-            setEmail('');
-        } catch (error) {
-            setStatus({
-                type: 'error',
-                message: 'An error occurred. Please try again.'
-            });
-        }
+        router.post('/newsletter', { email }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setStatus({
+                    type: 'success',
+                    message: 'Merci pour votre inscription !'
+                });
+                setEmail('');
+            },
+            onError: (errors) => {
+                setStatus({
+                    type: 'error',
+                    message: errors.email || 'Une erreur est survenue. Veuillez réessayer.'
+                });
+            }
+        });
     };
 
     return (
