@@ -257,7 +257,7 @@ export default function Category({ categories, colors, products, bestSellers, fi
                                     <h4 className="font-bold text-lg mb-2">{product.name}</h4>
                                     <div className="flex items-center justify-center gap-2 mb-2">
                                         <h3 className="text-gray-700 font-bold text-xl">€{(product.price / 100).toFixed(2)}</h3>
-                                        {product.discount && (
+                                        {product.discount && product.discount.percentage > 0 && (
                                             <span className="text-sm text-red-500 font-semibold">
                                                 -{product.discount.percentage}%
                                             </span>
