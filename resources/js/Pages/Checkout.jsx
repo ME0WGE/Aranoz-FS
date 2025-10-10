@@ -16,7 +16,7 @@ export default function Checkout({ cartItems, user }) {
       <Head title="Checkout" />
       <section className="bg-[#EAF6FA] pt-16 pb-8">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-          <h2 className="text-4xl font-bold mb-2">Producta Checkout</h2>
+          <h2 className="text-4xl font-bold mb-2">Checkout</h2>
           <img src="/storage/images/banner/banner_img.png" alt="Banner Chair" className="w-52 h-52 object-contain" />
         </div>
       </section>
@@ -68,7 +68,7 @@ export default function Checkout({ cartItems, user }) {
               <input type="checkbox" checked={acceptTerms} onChange={e => setAcceptTerms(e.target.checked)} required />
               <span>I’ve read and accept the <a href="#" className="text-pink-500 underline">terms & conditions</a></span>
             </div>
-            <button type="submit" className="bg-pink-500 text-white px-6 py-2 rounded font-bold w-full">PROCEED TO PAYPAL</button>
+            <button type="submit" className="bg-pink-500 text-white px-6 py-2 rounded font-bold w-full">PROCEED TO PAYMENT</button>
           </div>
         </form>
         <aside className="w-full lg:w-1/3">
@@ -88,7 +88,7 @@ export default function Checkout({ cartItems, user }) {
             </div>
             <div className="flex justify-between mb-2 text-gray-700">
               <span>SHIPPING</span>
-              <span>Flat Rate 9.99 €</span>
+              <span>Free worldwide</span>
             </div>
             <div className="flex justify-between mb-2 font-bold">
               <span>TOTAL</span>

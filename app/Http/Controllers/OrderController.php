@@ -7,19 +7,35 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use App\Mail\OrderConfirmationMail;
+use App\Mail\OrderTrackingMail;
 
 class OrderController extends Controller
 {
     public function updateStatus(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('user', 'items.product')->findOrFail($id);
+        $oldStatus = $order->status;
         $status = $request->input('status');
         if ($status === 'approved') $status = 'confirmed';
         if ($status === 'cancelled') $status = 'canceled';
         if (in_array($status, ['pending', 'confirmed', 'canceled'])) {
             $order->status = $status;
             $order->save();
+            
+            // Envoyer l'email approprié selon le changement de statut
+            try {
+                if ($status === 'confirmed') {
+                    // Email avec numéro de suivi (confirmation)
+                    Mail::to($order->user->email)->send(new OrderTrackingMail($order));
+                }
+            } catch (\Exception $e) {
+                // Log l'erreur mais ne pas bloquer la mise à jour du statut
+                \Log::error('Erreur envoi email commande: ' . $e->getMessage());
+            }
+            
             $msg = $status === 'confirmed' ? 'Commande validée avec succès.' : ($status === 'canceled' ? 'Commande annulée.' : 'Statut mis à jour.');
             return redirect()->route('admin.orders.index')->with('success', $msg);
         }
@@ -120,6 +136,16 @@ class OrderController extends Controller
             ]);
         }
         Cart::where('user_id', $user->id)->delete();
+        
+        // Envoyer l'email de confirmation de commande
+        try {
+            $orderWithRelations = Order::with('user', 'items.product')->find($order->id);
+            Mail::to($user->email)->send(new OrderConfirmationMail($orderWithRelations));
+        } catch (\Exception $e) {
+            // Log l'erreur mais ne pas bloquer la création de commande
+            \Log::error('Erreur envoi email confirmation commande: ' . $e->getMessage());
+        }
+        
         return redirect()->route('orders.show', $order->id);
     }
 
