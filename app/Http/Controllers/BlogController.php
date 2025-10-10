@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BlogController extends Controller
@@ -49,13 +51,23 @@ class BlogController extends Controller
     }
 
     public function show($id) {
-        $blog = Blog::find($id);
+        $blog = Blog::with(['category', 'tags', 'user', 'comments.user'])->findOrFail($id);
+        
+        // Get related blogs from same category
+        $relatedBlogs = Blog::with('category')
+            ->where('blog_category_id', $blog->blog_category_id)
+            ->where('id', '!=', $blog->id)
+            ->limit(3)
+            ->get();
+        
         $cartCount = 0;
         if (\Illuminate\Support\Facades\Auth::check()) {
             $cartCount = \App\Models\Cart::where('user_id', \Illuminate\Support\Facades\Auth::id())->sum('quantity');
         }
-        return Inertia::render('Blog', [
+        
+        return Inertia::render('BlogDetails', [
             'blog' => $blog,
+            'relatedBlogs' => $relatedBlogs,
             'cartCount' => $cartCount,
         ]);
     }
@@ -250,5 +262,27 @@ class BlogController extends Controller
         $tag->delete();
 
         return back()->with('success', 'Tag deleted successfully!');
+    }
+
+    // Blog Comments
+    public function comment(Request $request, $id)
+    {
+        $blog = Blog::findOrFail($id);
+        $user = Auth::user();
+        
+        $validated = $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+
+        Comment::create([
+            'message' => $validated['content'],
+            'name' => $user->name,
+            'email' => $user->email,
+            'website' => null,
+            'user_id' => $user->id,
+            'blog_id' => $blog->id,
+        ]);
+
+        return back()->with('success', 'Commentaire ajouté avec succès !');
     }
 }

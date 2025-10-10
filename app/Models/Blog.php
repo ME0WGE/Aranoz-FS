@@ -37,4 +37,10 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    // Relation with user (author)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

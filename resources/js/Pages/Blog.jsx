@@ -1,7 +1,7 @@
 
 import React from "react";
 import AppLayout from '@/Layouts/AppLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Blog({ posts, categories, recentPosts, tags, instagramFeeds, cartCount }) {
     return (
@@ -32,12 +32,12 @@ export default function Blog({ posts, categories, recentPosts, tags, instagramFe
                                         </div>
                                     </div>
                                     <div className="p-12 pb-8">
-                                        <a href={post.url} className="block font-bold text-2xl mb-2 hover:text-pink-500 transition leading-tight">{post.title}</a>
+                                        <Link href={`/blog/${post.id}`} className="block font-bold text-2xl mb-2 hover:text-pink-500 transition leading-tight">{post.title}</Link>
                                         <div className="flex gap-4 text-gray-400 text-sm mb-2">
-                                            <span>{post.category}</span>
-                                            <span>{post.comments} Comments</span>
+                                            <span>{post.category?.name || 'Non catégorisé'}</span>
+                                            <span>{post.comments?.length || 0} Commentaires</span>
                                         </div>
-                                        <p className="text-gray-600 mb-0 leading-relaxed">{post.excerpt}</p>
+                                        <p className="text-gray-600 mb-0 leading-relaxed">{post.content?.substring(0, 200)}...</p>
                                     </div>
                                 </article>
                             ))}
@@ -71,8 +71,8 @@ export default function Blog({ posts, categories, recentPosts, tags, instagramFe
                                     <li key={post.id} className="flex items-center gap-4">
                                         <img src={post.image} alt={post.title} className="w-16 h-16 object-cover rounded" />
                                         <div>
-                                            <a href={post.url} className="font-medium text-gray-700 hover:text-pink-500 transition leading-tight">{post.title}</a>
-                                            <div className="text-xs text-gray-400">{post.date}</div>
+                                            <Link href={`/blog/${post.id}`} className="font-medium text-gray-700 hover:text-pink-500 transition leading-tight">{post.title}</Link>
+                                            <div className="text-xs text-gray-400">{new Date(post.created_at).toLocaleDateString('fr-FR')}</div>
                                         </div>
                                     </li>
                                 ))}
