@@ -94,12 +94,12 @@ export default function Index({ orders, cartCount }) {
                                                     className="w-20 h-20 object-cover rounded-lg"
                                                 />
                                                 <div className="flex-1">
-                                                    <h4 className="font-semibold text-gray-900">{item.product?.name || 'Produit inconnu'}</h4>
+                                                    <h4 className="font-semibold text-gray-900">{item.product_name || 'Produit inconnu'}</h4>
                                                     <p className="text-sm text-gray-600">Quantité: {item.quantity}</p>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="font-semibold text-gray-900">€{((item.price * item.quantity) / 100).toFixed(2)}</p>
-                                                    <p className="text-sm text-gray-500">€{(item.price / 100).toFixed(2)} / unité</p>
+                                                    <p className="font-semibold text-gray-900">€{((item.product_price * item.quantity) / 100).toFixed(2)}</p>
+                                                    <p className="text-sm text-gray-500">€{(item.product_price / 100).toFixed(2)} / unité</p>
                                                 </div>
                                             </div>
                                         ))}
