@@ -94,12 +94,12 @@ export default function Show({ order, cartCount }) {
                                                 className="w-24 h-24 object-cover rounded-lg"
                                             />
                                             <div className="flex-1">
-                                                <h5 className="font-semibold text-gray-900 mb-1">{item.product?.name || 'Produit inconnu'}</h5>
+                                                <h5 className="font-semibold text-gray-900 mb-1">{item.product_name || 'Produit inconnu'}</h5>
                                                 <p className="text-sm text-gray-600">Quantité: {item.quantity}</p>
-                                                <p className="text-sm text-gray-600">Prix unitaire: €{(item.price / 100).toFixed(2)}</p>
+                                                <p className="text-sm text-gray-600">Prix unitaire: €{(item.product_price / 100).toFixed(2)}</p>
                                             </div>
                                             <div className="text-right">
-                                                <p className="font-bold text-lg text-gray-900">€{((item.price * item.quantity) / 100).toFixed(2)}</p>
+                                                <p className="font-bold text-lg text-gray-900">€{((item.product_price * item.quantity) / 100).toFixed(2)}</p>
                                             </div>
                                         </div>
                                     ))}
