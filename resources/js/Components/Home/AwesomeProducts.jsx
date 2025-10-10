@@ -18,6 +18,7 @@ const AwesomeProducts = ({ products }) => {
             quantity: 1 
         }, {
             preserveScroll: true,
+            preserveState: true,
             onSuccess: () => {
                 // Optionally show a success message
                 console.log('Product added to cart!');
