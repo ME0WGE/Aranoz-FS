@@ -101,7 +101,15 @@ export default function Header({ auth, cartCount }) {
                             <Dropdown>
                                 <Dropdown.Trigger>
                                     <button className="flex items-center p-2 text-gray-900 hover:text-[#FF3368] transition-colors duration-300">
-                                        <FaUser className="h-6 w-6" />
+                                        {auth.user?.avatar ? (
+                                            <img 
+                                                src={auth.user.avatar} 
+                                                alt={auth.user.name}
+                                                className="h-8 w-8 rounded-full object-cover border-2 border-gray-300"
+                                            />
+                                        ) : (
+                                            <FaUser className="h-6 w-6" />
+                                        )}
                                     </button>
                                 </Dropdown.Trigger>
                                 <Dropdown.Content>

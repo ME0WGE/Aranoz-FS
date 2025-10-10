@@ -7,7 +7,7 @@ import WeeklySale from '@/Components/Home/WeeklySale';
 import BestSellers from '@/Components/Home/BestSellers';
 import Newsletter from '@/Components/Home/Newsletter';
 
-export default function Home({ featuredProducts, bestSellers, products, categories, blogs, saleProduct, saleEndDate }) {
+export default function Home({ featuredProducts, bestSellers, products, categories, blogs, saleProduct, saleEndDate, auth }) {
     return (
         <AppLayout>
             <Head title="Home" />
@@ -15,7 +15,7 @@ export default function Home({ featuredProducts, bestSellers, products, categori
                 <Banner featuredProducts={featuredProducts} />
                 <FeaturedCategory categories={categories} />
                 <AwesomeProducts products={products} />
-                <WeeklySale saleProduct={saleProduct} saleEndDate={saleEndDate} />
+                <WeeklySale saleProduct={saleProduct} saleEndDate={saleEndDate} auth={auth} />
                 <BestSellers products={bestSellers} />
                 <Newsletter blogs={blogs} />
             </div>

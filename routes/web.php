@@ -43,6 +43,9 @@ Route::post('/contact', [ContactController::class, "store"])->name('contact.stor
 // Newsletter subscription (public)
 Route::post('/newsletter', [NewsletterSubscriptionController::class, "store"])->name('newsletter.subscribe');
 
+// Promo code request (authenticated)
+Route::post('/promo-request', [HomeController::class, "requestPromoCode"])->middleware('auth')->name('promo.request');
+
 // ========================================
 // AUTHENTICATED USER ROUTES
 // ========================================

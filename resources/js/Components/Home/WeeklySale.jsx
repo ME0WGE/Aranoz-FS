@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { router } from '@inertiajs/react';
 
-const WeeklySale = ({ saleProduct, saleEndDate }) => {
+const WeeklySale = ({ saleProduct, saleEndDate, auth }) => {
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
@@ -30,6 +31,24 @@ const WeeklySale = ({ saleProduct, saleEndDate }) => {
 
         return () => clearInterval(timer);
     }, [saleEndDate]);
+
+    const handleBookNow = () => {
+        if (!auth?.user) {
+            alert('Vous devez être connecté pour réserver');
+            router.visit('/login');
+            return;
+        }
+
+        router.post('/promo-request', {}, {
+            preserveScroll: true,
+            onSuccess: () => {
+                alert('Votre demande a été enregistrée ! Vous recevrez bientôt votre code promo par email.');
+            },
+            onError: () => {
+                alert('Une erreur est survenue. Veuillez réessayer.');
+            }
+        });
+    };
 
     return (
         <section className="py-24 bg-white">
@@ -77,7 +96,10 @@ const WeeklySale = ({ saleProduct, saleEndDate }) => {
                             </div>
                         </div>
 
-                        <button className="bg-[#FF3368] text-white px-12 py-4 rounded hover:bg-[#ff1f5a] transition-colors duration-300 text-sm uppercase tracking-wide font-medium">
+                        <button 
+                            onClick={handleBookNow}
+                            className="bg-[#FF3368] text-white px-12 py-4 rounded hover:bg-[#ff1f5a] transition-colors duration-300 text-sm uppercase tracking-wide font-medium"
+                        >
                             Book Now
                         </button>
                     </div>

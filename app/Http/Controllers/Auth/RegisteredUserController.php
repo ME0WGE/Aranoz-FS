@@ -34,11 +34,20 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'avatar' => 'nullable|image|max:2048', // max 2MB
         ]);
+
+        $avatarPath = null;
+        
+        // Handle avatar upload
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = '/storage/' . $path;
+        }
 
         $user = User::create([
             'name' => $request->name,
-            'avatar' => null,
+            'avatar' => $avatarPath,
             'role_id' => 1,
             'email' => $request->email,
             'password' => Hash::make($request->password),
