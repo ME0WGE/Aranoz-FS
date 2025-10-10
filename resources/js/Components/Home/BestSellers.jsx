@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { router } from '@inertiajs/react';
 
 const BestSellers = ({ products }) => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [activeTab, setActiveTab] = useState('best');
+    const [currentPosition, setCurrentPosition] = useState(0);
+    const scrollRef = useRef(null);
+    const animationRef = useRef(null);
     
     const handleAddToCart = (productId) => {
         router.post('/cart/add', { 
@@ -22,98 +23,101 @@ const BestSellers = ({ products }) => {
         {
             id: 1,
             name: "Quartz Belt Watch",
-            price: "$150.00",
+            price: "€150.00",
             image: "/storage/images/product/product_1.png",
-            rating: 5,
             color: "bg-white"
         },
         {
             id: 2,
             name: "Quartz Belt Watch",
-            price: "$150.00",
+            price: "€150.00",
             image: "/storage/images/product/product_2.png",
-            rating: 4,
             color: "bg-[#F0F8F0]"
         },
         {
             id: 3,
             name: "Quartz Belt Watch",
-            price: "$150.00",
+            price: "€150.00",
             image: "/storage/images/product/product_3.png",
-            rating: 5,
             color: "bg-[#EEF1FF]"
         },
         {
             id: 4,
             name: "Quartz Belt Watch",
-            price: "$150.00",
+            price: "€150.00",
             image: "/storage/images/product/product_4.png",
-            rating: 4,
             color: "bg-[#FFF3EA]"
         }
     ];
     
-    const displayProducts = products && products.length > 0 ? products.slice(0, 4).map(p => ({
+    const displayProducts = products && products.length > 0 ? products.map(p => ({
         id: p.id,
         name: p.name,
-        price: `$${(p.price/100).toFixed(2)}`,
+        price: `€${(p.price/100).toFixed(2)}`,
         image: p.picture_main,
-        rating: 5,
         color: "bg-white"
     })) : defaultProducts;
 
-    const itemsPerSlide = 4;
-    const totalSlides = Math.ceil(displayProducts.length / itemsPerSlide);
+    // Duplicate products for infinite scroll effect
+    const infiniteProducts = [...displayProducts, ...displayProducts, ...displayProducts];
 
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    const productWidth = 288; // 280px width + 8px gap
+
+    const handlePrev = () => {
+        setCurrentPosition(prev => prev - productWidth);
     };
 
-    const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    const handleNext = () => {
+        setCurrentPosition(prev => prev + productWidth);
     };
+
+    useEffect(() => {
+        const scrollContainer = scrollRef.current;
+        if (!scrollContainer) return;
+
+        // Auto-scroll logic
+        const autoScroll = () => {
+            setCurrentPosition(prev => {
+                const newPosition = prev + 1;
+                
+                // Reset to beginning when we've scrolled past the first set
+                if (newPosition >= displayProducts.length * productWidth) {
+                    return 0;
+                }
+                
+                return newPosition;
+            });
+        };
+
+        const intervalId = setInterval(autoScroll, 30); // Smooth 30ms interval
+
+        return () => clearInterval(intervalId);
+    }, [displayProducts.length, productWidth]);
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.style.transform = `translateX(-${currentPosition}px)`;
+        }
+    }, [currentPosition]);
 
     return (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white overflow-hidden">
             <div className="max-w-[1320px] mx-auto px-5">
-                <div className="flex justify-between items-center mb-12">
+                <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-gray-900">Best Sellers</h2>
-                    <div className="flex items-center space-x-8">
-                        <button 
-                            onClick={() => setActiveTab('best')}
-                            className={`text-lg font-medium transition-colors duration-300 ${
-                                activeTab === 'best' 
-                                    ? 'text-[#FF3368]' 
-                                    : 'text-gray-600 hover:text-[#FF3368]'
-                            }`}
-                        >
-                            Best
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('featured')}
-                            className={`text-lg font-medium transition-colors duration-300 ${
-                                activeTab === 'featured' 
-                                    ? 'text-[#FF3368]' 
-                                    : 'text-gray-600 hover:text-[#FF3368]'
-                            }`}
-                        >
-                            Featured
-                        </button>
-                    </div>
                 </div>
                 
                 <div className="relative">
                     <div className="overflow-hidden">
                         <div
-                            className="flex transition-all duration-500 ease-in-out"
-                            style={{
-                                transform: `translateX(-${currentSlide * 100}%)`
-                            }}
+                            ref={scrollRef}
+                            className="flex gap-8"
+                            style={{ willChange: 'transform', transition: 'transform 0.3s ease-out' }}
                         >
-                            {displayProducts.map((product) => (
+                            {infiniteProducts.map((product, index) => (
                                 <div
-                                    key={product.id}
-                                    className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4"
+                                    key={`${product.id}-${index}`}
+                                    className="flex-none w-[280px]"
                                 >
                                     <div className="group">
                                         <div className={`relative aspect-square rounded-lg overflow-hidden ${product.color}`}>
@@ -147,19 +151,20 @@ const BestSellers = ({ products }) => {
                         </div>
                     </div>
 
+                    {/* Navigation Buttons */}
                     <button
-                        onClick={prevSlide}
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#FF3368] hover:text-white transition-all duration-300 group z-10"
+                        onClick={handlePrev}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#FF3368] hover:text-white transition-all duration-300 z-10"
                     >
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button
-                        onClick={nextSlide}
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#FF3368] hover:text-white transition-all duration-300 group z-10"
+                        onClick={handleNext}
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#FF3368] hover:text-white transition-all duration-300 z-10"
                     >
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
