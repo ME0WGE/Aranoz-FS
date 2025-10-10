@@ -23,8 +23,8 @@ export default function Checkout({ cartItems, user }) {
       <section className="max-w-6xl mx-auto px-4 py-12 flex flex-col lg:flex-row gap-8">
         <form className="w-full lg:w-2/3 bg-white p-8 rounded shadow" onSubmit={handleSubmit}>
           <div className="mb-6">
-            <div className="bg-[#ecfdff] p-3 rounded text-sm mb-2">Returning Customer? <a href="/login" className="text-pink-500 underline">Click here to login</a></div>
-            <div className="bg-[#ecfdff] p-3 rounded text-sm">Have a coupon? <span className="text-pink-500 underline cursor-pointer">Click here to enter your code</span></div>
+            {/* <div className="bg-[#ecfdff] p-3 rounded text-sm mb-2">Returning Customer? <a href="/login" className="text-pink-500 underline">Click here to login</a></div> */}
+            {/* <div className="bg-[#ecfdff] p-3 rounded text-sm">Have a coupon? <span className="text-pink-500 underline cursor-pointer">Click here to enter your code</span></div> */}
           </div>
           <h3 className="text-xl font-bold mb-4">Billing Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -43,13 +43,13 @@ export default function Checkout({ cartItems, user }) {
           <input type="text" className="border rounded px-3 py-2 mb-4" placeholder="District" />
           <input type="text" className="border rounded px-3 py-2 mb-4" placeholder="Postcode/Zip" required />
           <div className="mb-4 flex items-center gap-2">
-            <input type="checkbox" /> <span>Create an account?</span>
+            {/* <input type="checkbox" /> <span>Create an account?</span> */}
           </div>
           <h3 className="text-xl font-bold mb-4">Shipping Details</h3>
           <div className="mb-4 flex items-center gap-2">
-            <input type="checkbox" /> <span>Ship to different address?</span>
+            {/* <input type="checkbox" /> <span>Ship to different address?</span> */}
           </div>
-          <textarea className="border rounded px-3 py-2 mb-4 w-full" placeholder="Order Notes" rows={3}></textarea>
+          {/* <textarea className="border rounded px-3 py-2 mb-4 w-full" placeholder="Order Notes" rows={3}></textarea> */}
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-4">Payment</h3>
             <div className="mb-4">

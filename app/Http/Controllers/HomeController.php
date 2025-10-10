@@ -43,6 +43,10 @@ class HomeController extends Controller
             ->whereHas('discount')
             ->inRandomOrder()
             ->first();
+        
+        // Set weekly sale end date (fixed date, not relative to now)
+        // This ensures the timer doesn't reset on page refresh
+        $saleEndDate = now()->endOfWeek()->addDays(2)->setTime(23, 59, 59)->toIso8601String();
             
         // Get recent blogs
         $blogs = Blog::with('category')
@@ -60,6 +64,7 @@ class HomeController extends Controller
             'products' => $featuredProducts,
             'bestSellers' => $bestSellers,
             'saleProduct' => $saleProduct,
+            'saleEndDate' => $saleEndDate,
             'blogs' => $blogs,
             'cartCount' => $cartCount,
         ]);

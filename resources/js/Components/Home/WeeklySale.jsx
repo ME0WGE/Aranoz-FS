@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const WeeklySale = ({ saleProduct }) => {
+const WeeklySale = ({ saleProduct, saleEndDate }) => {
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
@@ -9,9 +9,8 @@ const WeeklySale = ({ saleProduct }) => {
     });
 
     useEffect(() => {
-        // Set end date to 5 days from now
-        const endDate = new Date();
-        endDate.setDate(endDate.getDate() + 5);
+        // Use the end date from backend (fixed date that doesn't change on refresh)
+        const endDate = new Date(saleEndDate);
 
         const timer = setInterval(() => {
             const now = new Date().getTime();
@@ -30,7 +29,7 @@ const WeeklySale = ({ saleProduct }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [saleEndDate]);
 
     return (
         <section className="py-24 bg-white">
@@ -48,7 +47,7 @@ const WeeklySale = ({ saleProduct }) => {
                     
                     <div className="lg:pl-8">
                         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-12">
-                            Weekly Sale on<br />{saleProduct?.discount ? `${saleProduct.discount}% Off All Products` : '60% Off All Products'}
+                            Weekly Sale on<br />{saleProduct?.discount?.percentage ? `${saleProduct.discount.percentage}% Off All Products` : '60% Off All Products'}
                         </h2>
                         
                         <div className="grid grid-cols-4 gap-6 mb-12">
