@@ -22,5 +22,21 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->respond(function ($response, $exception, $request) {
+            if (in_array($response->getStatusCode(), [403, 404])) {
+                if ($response->getStatusCode() === 404) {
+                    return \Inertia\Inertia::render('Errors/404')
+                        ->toResponse($request)
+                        ->setStatusCode(404);
+                }
+                
+                if ($response->getStatusCode() === 403) {
+                    return \Inertia\Inertia::render('Errors/403')
+                        ->toResponse($request)
+                        ->setStatusCode(403);
+                }
+            }
+            
+            return $response;
+        });
     })->create();
