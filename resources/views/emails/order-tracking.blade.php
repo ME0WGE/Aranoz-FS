@@ -95,17 +95,17 @@
             @foreach($order->items as $item)
             <div class="product-item">
                 <div>
-                    <strong>{{ $item->product->name }}</strong><br>
+                    <strong>{{ $item->product_name }}</strong><br>
                     Quantité: {{ $item->quantity }}
                 </div>
                 <div>
-                    €{{ number_format($item->price / 100, 2) }}
+                    €{{ number_format($item->product_price / 100, 2) }}
                 </div>
             </div>
             @endforeach
             
             <div class="total">
-                Total: €{{ number_format($order->total / 100, 2) }}
+                Total: €{{ number_format($order->total_price / 100, 2) }}
             </div>
         </div>
 
